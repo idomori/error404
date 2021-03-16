@@ -1,4 +1,4 @@
-package edu.umich.achacko.kotlinrecommender
+package edu.umich.kyuhyunp.kotlinchatter
 
 import org.junit.Test
 
