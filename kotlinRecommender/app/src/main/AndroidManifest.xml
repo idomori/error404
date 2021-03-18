@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.umich.kyuhyunp.kotlinchatter">
+    package="edu.umich.error404.kotlinchatter">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -14,10 +14,10 @@
         android:theme="@style/Theme.KotlinChatter"
         android:networkSecurityConfig="@xml/network_security_config">
 
-        <activity android:name=".PostActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name="edu.umich.error404.kotlinchatter.PostActivity"
+            android:parentActivityName="edu.umich.error404.kotlinchatter.MainActivity" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name="edu.umich.error404.kotlinchatter.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

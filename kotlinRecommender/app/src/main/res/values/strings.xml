@@ -2,5 +2,5 @@
     <string name="app_name">kotlinRecommender</string>
     <string name="post">Post</string>
     <string name="submit">Submit</string>
-    <string name="song">Enter a song.</string>
+    <string name="song">Please enter a Spotify song link: </string>
 </resources>
