@@ -4,6 +4,7 @@ import json
 import os
 import requests
 import spotipy
+from spotipy import oauth2
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
@@ -28,16 +29,37 @@ def getsongs(request):
 
 @csrf_exempt
 def postsong(request):
+
     if request.method != 'POST':
         return HttpResponse(status=404)
+    print(request)
     json_data = json.loads(request.body)
     track_id = json_data['track_id']
+
     auth_manager = SpotifyClientCredentials()
     sp = spotipy.Spotify(auth_manager=auth_manager)
-    response = {}
-    response['songs'] = sp.audio_features([track_id])
+    token = auth_manager.get_access_token()
+    # print(token)
+
+    track_info = {}
+    track_info['songs'] = sp.audio_features([track_id])
+    
+    # https://api.spotify.com/v1/tracks/{id}
+    id = track_info['songs'][0]['id']
+    try:
+    	response = requests.get(url='https://api.spotify.com/v1/tracks/' + id, 
+                              	headers={'Authorization': 'Bearer ' + token})
+    except requests.exceptions.RequestException as e:  # This is the correct syntax
+    	print(e)
+    # print(response.json())
+
+    response = response.json()
+    track_info['songs'][0]['artists'] = response['artists']
+    track_info['songs'][0]['name'] = response['name']
+    
     # track_id = '6rqhFgbbKwnb9MLmUQDhG6'  # Dummy Track
-    return JsonResponse(response)
+
+    return JsonResponse(track_info)
   
 
     # json_data = json.loads(request.body)
