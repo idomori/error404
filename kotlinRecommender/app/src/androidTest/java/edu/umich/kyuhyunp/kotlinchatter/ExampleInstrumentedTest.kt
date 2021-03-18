@@ -1,4 +1,4 @@
-package edu.umich.achacko.kotlinrecommender
+package edu.umich.kyuhyunp.kotlinchatter
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("edu.umich.achacko.kotlinrecommender", appContext.packageName)
+        assertEquals("edu.umich.kyuhyunp.kotlinchatter", appContext.packageName)
     }
 }
