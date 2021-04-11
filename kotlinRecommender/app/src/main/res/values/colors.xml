@@ -6,14 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="gray">#535353</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="yellow">#FFFF52</color>
-    <color name="yellow2">#F1D904</color>
-    <color name="discard">#AFACAB</color>
-    <color name="discard2">#F38D6D</color>
-    <color name="save">#F4F4B8</color>
-    <color name="save2">#A5CA40</color>
-
-
+    <color name="yellow">#FFFFFF00</color>
+    <color name="orange">#FFFFC000</color>
 </resources>
