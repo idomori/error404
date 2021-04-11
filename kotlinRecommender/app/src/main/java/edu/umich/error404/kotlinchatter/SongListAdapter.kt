@@ -18,8 +18,8 @@ class SongListAdapter(context: Context, users: ArrayList<Song?>) :
 
 
         item?.run {
-            listItemViewById.songTextView.text = "Song = " + song
-            listItemViewById.artistTextView.text = "Artist = " + artist
+            listItemViewById.songTextView.text = song
+            listItemViewById.artistTextView.text = artist
             listItemViewById.keyTextView.text = "Key = " + key
             listItemViewById.tempoTextView.text = "Tempo = " + tempo
             listItemViewById.danceabilityTextView.text = "Danceability = " + danceability
