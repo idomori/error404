@@ -1,6 +1,14 @@
 <resources>
-    <string name="app_name">kotlinRecommender</string>
+    <string name="app_name">Music Recommendation Tool</string>
     <string name="post">Post</string>
     <string name="submit">Submit</string>
     <string name="song">Please enter a Spotify song link: </string>
+    <string name="undoAdd">Undo Add?</string>
+    <string name="undoReject">Undo Rejection?</string>
+    <string-array name="genres">
+        <item>EDM</item>
+        <item>Hip-Hop</item>
+        <item>Rock</item>
+    </string-array>
+
 </resources>

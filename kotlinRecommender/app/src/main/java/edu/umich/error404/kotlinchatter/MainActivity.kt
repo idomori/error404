@@ -45,4 +45,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, PostActivity::class.java)
         startActivity(intent)
     }
+
+    fun getRecommendation(view: View?) {
+        val intent = Intent(this, RecommendationActivity::class.java)
+        startActivity(intent)
+    }
 }
