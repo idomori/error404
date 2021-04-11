@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">Music Recommendation Tool</string>
-    <string name="post">Post</string>
-    <string name="submit">Submit</string>
-    <string name="song">Please enter a Spotify song link: </string>
-    <string name="undoAdd">Undo Add?</string>
-    <string name="undoReject">Undo Rejection?</string>
-</resources>
