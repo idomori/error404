@@ -41,7 +41,6 @@
         android:gravity="start|top"
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
-        android:textSize="14sp"
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/submitButton"
         app:layout_constraintStart_toStartOf="parent"

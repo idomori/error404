@@ -14,28 +14,6 @@ class SongStore {
     private val serverUrl = "https://159.65.222.2/"
     private var songFeature = JSONObject()
 
-    /*fun postPlaylist(context: Context, song: Song, completion: () -> Unit) {
-        val play_queue = newRequestQueue(context)
-
-        val jsonObj = mapOf(
-            "track_id" to song.song
-        )
-
-        val postRequest = JsonObjectRequest(serverUrl+"get_playlist_tracks/", JSONObject(jsonObj),
-            { response ->
-                val songsReceived = try { response.getJSONArray("songs") } catch (e: JSONException) { JSONArray() }
-                val songEntry = songsReceived[0] as JSONObject
-                songFeature = songEntry
-                getSongInfo(context) {}
-            },
-            { error ->
-                // TODO handle error
-                println(error.message)
-            }
-        )
-        play_queue.add(postRequest)
-    }*/
-
     fun postSong(context: Context, song: Song, completion: () -> Unit) {
         val queue = newRequestQueue(context)
 

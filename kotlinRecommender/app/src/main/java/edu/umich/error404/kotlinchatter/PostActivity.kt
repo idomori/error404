@@ -25,15 +25,4 @@ class PostActivity : AppCompatActivity() {
         finish()
     }
 
-    /*fun submitPlaylist(view: View?) {
-
-        val enteredPlaylist = Song(
-            song = postViewById.songLinkTextView.text.toString())
-
-        val store = SongStore()
-
-        store.postPlaylist(this, enteredPlaylist) {}
-        finish()
-    }*/
-
 }
