@@ -8,14 +8,16 @@
 
     <ImageButton
         android:id="@+id/back"
-        android:layout_width="75dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_button" />
+        app:srcCompat="@drawable/back_button"
+        android:onClick="goBack"/>
 
     <ListView
-        android:id="@+id/songList"
+        android:id="@+id/hiphop_songlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"

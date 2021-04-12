@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="37dp"
         android:layout_marginTop="52dp"
+        android:onClick="importSong"
         android:text="import"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -54,6 +55,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="50dp"
+        android:onClick="chooseHiphop"
         android:text="Hip-Hop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_description" />
@@ -64,6 +66,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="80dp"
         android:layout_marginTop="36dp"
+        android:onClick="choosePop"
         android:text="Pop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genre1" />
@@ -74,6 +77,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="36dp"
+        android:onClick="chooseRock"
         android:text="Rock"
         app:layout_constraintStart_toEndOf="@+id/genre3"
         app:layout_constraintTop_toBottomOf="@+id/genre2" />
@@ -84,6 +88,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="50dp"
+        android:onClick="chooseEDM"
         android:text="EDM"
         app:layout_constraintStart_toEndOf="@+id/genre1"
         app:layout_constraintTop_toBottomOf="@+id/app_description" />

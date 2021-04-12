@@ -23,6 +23,7 @@ class SongListAdapter(context: Context, users: ArrayList<Song?>) :
             listItemViewById.keyTextView.text = "Key = " + key
             listItemViewById.tempoTextView.text = "Tempo = " + tempo
             listItemViewById.danceabilityTextView.text = "Danceability = " + danceability
+           // Picasso.get().load(image_url).into(listItemViewById.albumImageView)
         }
         return listItemViewById.root
     }

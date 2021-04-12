@@ -15,17 +15,18 @@
         android:theme="@style/Theme.KotlinChatter">
         <activity android:name=".HiphopActivity"></activity>
         <activity android:name=".ImportActivity"></activity>
-        <activity android:name=".StartingActivity" />
-        <activity android:name=".RecommendationActivity" />
-        <activity
-            android:name=".PostActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".StartingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".UndoReject" />
+        <activity android:name=".UndoAdd" />
+        <activity android:name=".RecommendationActivity" />
+        <activity android:name=".PostActivity"/>
+        <activity android:name=".MainActivity">
         </activity>
     </application>
 

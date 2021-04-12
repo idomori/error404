@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startPost(view: View?) {
-        val intent = Intent(this, PostActivity::class.java)
+        val intent = Intent(this, StartingActivity::class.java)
         startActivity(intent)
     }
 
