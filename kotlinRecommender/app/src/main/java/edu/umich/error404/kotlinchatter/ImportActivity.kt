@@ -12,10 +12,18 @@ class ImportActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         importViewById = ActivityImportBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_import)
+        setContentView(importViewById.root)
     }
 
     fun submitSong(view: View?) {
+        val enteredUrl = importViewById.songLink.text.toString()
+        val store = SongStore()
+        if (enteredUrl.contains("playlist", ignoreCase = true)) {
+            store.readPlaylist(this, enteredUrl) {}
+        }
+        else {
+            store.readSong(this, enteredUrl) {}
+        }
         val intent = Intent(this, RecommendationActivity::class.java)
         startActivity(intent)
     }

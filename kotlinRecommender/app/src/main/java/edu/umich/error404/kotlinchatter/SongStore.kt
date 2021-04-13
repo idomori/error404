@@ -14,36 +14,63 @@ class SongStore {
     private val serverUrl = "https://159.65.222.2/"
     private var songFeature = JSONObject()
 
-    /*fun postPlaylist(context: Context, song: Song, completion: () -> Unit) {
-        val play_queue = newRequestQueue(context)
 
+    fun readPlaylist(context: Context, url: String, completion: () -> Unit) {
+        val queue = newRequestQueue(context)
         val jsonObj = mapOf(
-            "track_id" to song.song
+                "track_id" to url
         )
 
-        val postRequest = JsonObjectRequest(serverUrl+"get_playlist_tracks/", JSONObject(jsonObj),
-            { response ->
-                val songsReceived = try { response.getJSONArray("songs") } catch (e: JSONException) { JSONArray() }
-                val songEntry = songsReceived[0] as JSONObject
-                songFeature = songEntry
-                getSongInfo(context) {}
-            },
-            { error ->
-                // TODO handle error
-                println(error.message)
-            }
-        )
-        play_queue.add(postRequest)
-    }*/
+        val postRequest = JsonObjectRequest(serverUrl+"read_playlist/", JSONObject(jsonObj),
 
+                { response ->
+                    val songsReceived = try { response.getJSONArray("songs") } catch (e: JSONException) { JSONArray() }
+                    val songEntry = songsReceived[0] as JSONObject
+                    songFeature = songEntry
+                    getSongInfo(context) {}
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+
+        queue.add(postRequest)
+    }
+
+    fun readSong(context: Context, url: String, completion: () -> Unit) {
+        val queue = newRequestQueue(context)
+        val jsonObj = mapOf(
+                "track_id" to url
+        )
+
+        val postRequest = JsonObjectRequest(serverUrl+"read_playlist/", JSONObject(jsonObj),
+
+                { response ->
+                    val songsReceived = try { response.getJSONArray("songs") } catch (e: JSONException) { JSONArray() }
+                    val songEntry = songsReceived[0] as JSONObject
+                    songFeature = songEntry
+                    getSongInfo(context) {}
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+
+        queue.add(postRequest)
+    }
+
+
+    // postsong function is deleted from backend
     fun postSong(context: Context, song: Song, completion: () -> Unit) {
         val queue = newRequestQueue(context)
 
         val jsonObj = mapOf(
-            "track_id" to song.song
+            "track_id" to song.songName
         )
 
-        val postRequest = JsonObjectRequest(serverUrl+"postsong/", JSONObject(jsonObj),
+        val postRequest = JsonObjectRequest(serverUrl+"read_playlist/", JSONObject(jsonObj),
 
                 { response ->
                     val songsReceived = try { response.getJSONArray("songs") } catch (e: JSONException) { JSONArray() }
@@ -63,11 +90,11 @@ class SongStore {
 
     fun getSongInfo(context: Context, completion: () -> Unit) {
 
-        MainActivity.songsList.add(Song(song = songFeature.get("name").toString(),
-                       artist = ((songFeature.get("artists") as JSONArray).get(0) as JSONObject).get("name").toString(),
-                       key = songFeature.get("key").toString(),
-                       tempo = songFeature.get("tempo").toString(),
-                       danceability = songFeature.get("danceability").toString()))
+        MainActivity.songsList.add(Song(songName = songFeature.get("name").toString(),
+                       artistName = ((songFeature.get("artists") as JSONArray).get(0) as JSONObject).get("name").toString(),
+                       key = songFeature.get("key").toString().toIntOrNull(),
+                       bpm = songFeature.get("tempo").toString().toIntOrNull(),
+                       danceability = songFeature.get("danceability").toString().toDoubleOrNull()))
 
     }
 

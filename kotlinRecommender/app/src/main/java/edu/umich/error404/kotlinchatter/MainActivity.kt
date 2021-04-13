@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivityMainBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -12,7 +14,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewById: ActivityMainBinding
     companion object {
         @JvmField
-        var songsList = arrayListOf<Song>()
+        //var songsList = arrayListOf<Song>()
+        var songsList: Queue<Song> = LinkedList<Song>()
+        var LikedSongsList = arrayListOf<Song>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +27,7 @@ class MainActivity : AppCompatActivity() {
         songs = SongListAdapter(this, ArrayList())
         mainViewById.songListView.setAdapter(songs)
 
-        // setup refreshContainer here later
-
+        // setup refreshContainer here
         mainViewById.refreshContainer.setOnRefreshListener {
             refreshTimeline()
         }
@@ -34,9 +37,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshTimeline() {
         val store = SongStore()
-        songs.clear()
-        for (i in 0 until songsList.size) {
-            songs.add(songsList[i])
+        LikedSongsList.clear()
+        for (i in 0 until LikedSongsList.size) {
+            songs.add(LikedSongsList[i])
         }
         mainViewById.refreshContainer.isRefreshing = false
     }

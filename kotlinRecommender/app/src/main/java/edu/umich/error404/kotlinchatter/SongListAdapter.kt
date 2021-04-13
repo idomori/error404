@@ -18,10 +18,10 @@ class SongListAdapter(context: Context, users: ArrayList<Song?>) :
 
 
         item?.run {
-            listItemViewById.songTextView.text = song
-            listItemViewById.artistTextView.text = artist
+            listItemViewById.songTextView.text = songName
+            listItemViewById.artistTextView.text = artistName
             listItemViewById.keyTextView.text = "Key = " + key
-            listItemViewById.tempoTextView.text = "Tempo = " + tempo
+            listItemViewById.tempoTextView.text = "BPM = " + bpm
             listItemViewById.danceabilityTextView.text = "Danceability = " + danceability
            // Picasso.get().load(image_url).into(listItemViewById.albumImageView)
         }

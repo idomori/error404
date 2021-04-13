@@ -1,6 +1,7 @@
 package edu.umich.error404.kotlinchatter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -331,6 +332,11 @@ class RecommendationActivity : AppCompatActivity() {
         recViewById.settingPanel.setVisibility(View.VISIBLE);
     }
 
+    fun endBtnClick(v: View) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
 
     fun settingDoneBtnClick(v: View) {
         bpmVal = recViewById.bpmBar.progress
@@ -356,5 +362,6 @@ class RecommendationActivity : AppCompatActivity() {
         this.view.setBackgroundColor(colorInt)
         return this
     }
+
 
 }
