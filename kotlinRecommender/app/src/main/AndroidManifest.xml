@@ -22,8 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UndoReject" />
-        <activity android:name=".UndoAdd" />
         <activity android:name=".RecommendationActivity" />
         <activity android:name=".PostActivity"/>
         <activity android:name=".MainActivity">
