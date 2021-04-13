@@ -58,11 +58,11 @@ class RecommendationActivity : AppCompatActivity() {
         // Toast.makeText(applicationContext,"Recommendation Activity Starts",Toast.LENGTH_SHORT).show()
 
         var song = MainActivity.songList.peek()
-//        var preview_url = song.preview_url
-//        var image_url = song.image_url
+        var preview_url = song.preview_url
+        var image_url = song.image_url
         //use sample urls for now
-        var preview_url = "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9"
-        var image_url = "https://i.scdn.co/image/89b92c6b59131776c0cd8e5df46301ffcf36ed69"
+//        var preview_url = "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9"
+//        var image_url = "https://i.scdn.co/image/89b92c6b59131776c0cd8e5df46301ffcf36ed69"
 
 
         // Set MediaPlayer

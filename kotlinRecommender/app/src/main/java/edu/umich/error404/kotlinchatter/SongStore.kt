@@ -32,19 +32,6 @@ class SongStore {
                 }
         )
         queue.add(getRequest)
-//        val url = URL(serverUrl+"read_playlist?"+"track_id="+url)
-//
-//        with(url.openConnection() as HttpURLConnection) {
-//            requestMethod = "GET"  // optional default is GET
-//
-//            println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
-//
-//            inputStream.bufferedReader().use {
-//                it.lines().forEach { line ->
-//                    println(line)
-//                }
-//            }
-//        }
     }
 
     fun readSong(context: Context, url: String, completion: () -> Unit) {
