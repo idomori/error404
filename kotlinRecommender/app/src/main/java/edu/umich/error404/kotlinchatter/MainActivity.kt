@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         @JvmField
         //var songsList = arrayListOf<Song>()
-        var songsList: Queue<Song> = LinkedList<Song>()
-        var LikedSongsList = arrayListOf<Song>()
+        var songList: Queue<Song> = LinkedList<Song>()
+        var LikedSongList = arrayListOf<Song>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +37,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshTimeline() {
         val store = SongStore()
-        LikedSongsList.clear()
-        for (i in 0 until LikedSongsList.size) {
-            songs.add(LikedSongsList[i])
+        LikedSongList.clear()
+        for (i in 0 until LikedSongList.size) {
+            songs.add(LikedSongList[i])
         }
         mainViewById.refreshContainer.isRefreshing = false
     }
