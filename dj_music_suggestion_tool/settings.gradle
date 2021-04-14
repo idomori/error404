@@ -1,2 +1,0 @@
-include ':app'
-rootProject.name = "dj_music_suggestion_tool"

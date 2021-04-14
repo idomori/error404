@@ -7,8 +7,10 @@ class Song(
             var bpm: Int? = null,
             var key: Int? = null,
             var danceability: Double? = null,
-            var valance: Double? = null,
-            var energy: Double? = null
+            var valence: Double? = null,
+            var energy: Double? = null,
+            var preview_url: String? = null,
+            var image_url: String? = null
             ) {
     companion object {
         const val nFields = 8
