@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -25,11 +26,13 @@ class RecommendationActivity : AppCompatActivity() {
     private lateinit var mp: MediaPlayer
     private var totalTime: Int = 0
 
-    private var bpmVal = 0
-    private var keysVal = 0
-    private var danceabilityVal = 0
-    private var valenceVal = 0
-    private var energyVal = 1
+    private var song:Song = Song()
+    private var bpmVal:Double = 0.0
+    private var keyVal:Int = 0
+    private var danceabilityVal:Double = 0.0
+    private var valenceVal:Double = 0.0
+    private var energyVal:Double = 0.0
+
 
     @SuppressLint("HandlerLeak")
     var handler = object : Handler() {
@@ -57,12 +60,21 @@ class RecommendationActivity : AppCompatActivity() {
         // Temp toast message to test whether the activity has been refreshed
         // Toast.makeText(applicationContext,"Recommendation Activity Starts",Toast.LENGTH_SHORT).show()
 
-        var song = MainActivity.songList.peek()
-        var preview_url = song.preview_url
-        var image_url = song.image_url
+
+        song = MainActivity.songList.peek()
+        MainActivity.songList.poll()
+        var preview_url = song.preview_url.toString()
+        var image_url = song.image_url.toString()
+        var artist_name = song.artistName
+        var song_name = song.songName
+        bpmVal = song.bpm!!
+        keyVal = song.key!!
+        danceabilityVal = song.danceability!!
+        valenceVal = song.valence!!
+        energyVal = song.energy!!
+        recViewById.songTitle.text = song_name
+        recViewById.artistName.text = artist_name
         //use sample urls for now
-//        var preview_url = "https://p.scdn.co/mp3-preview/641fd877ee0f42f3713d1649e20a9734cc64b8f9"
-//        var image_url = "https://i.scdn.co/image/89b92c6b59131776c0cd8e5df46301ffcf36ed69"
 
 
         // Set MediaPlayer
@@ -73,9 +85,12 @@ class RecommendationActivity : AppCompatActivity() {
                     .setUsage(AudioAttributes.USAGE_MEDIA)
                     .build()
             )
-            setDataSource(preview_url)
-            prepare() // might take long! (for buffering, etc)
-            start()  // Assume we play the music by default
+            if (preview_url != "null") {
+                setDataSource(preview_url)
+                prepare() // might take long! (for buffering, etc)
+                start()  // Assume we play the music by default
+            }
+
         }
         mp.isLooping = true //need to change later
         mp.setVolume(0.5f, 0.5f)
@@ -123,10 +138,13 @@ class RecommendationActivity : AppCompatActivity() {
     }
 
     fun initSettingBars() {
-        // bpm Bar - actual range: [0,1100]
+        // bpm Bar - actual range: [0,300]
         recViewById.bpmBar.min = 0
-        recViewById.bpmBar.max = 11
-        recViewById.bpmBar.progress = bpmVal/100
+        recViewById.bpmBar.max = 30
+        recViewById.bpmBar.progress = (bpmVal/10).toInt()
+        var temp: Int = (bpmVal/10).toInt()
+        temp = temp*10
+        recViewById.bpmValueTextView.text = (temp).toString()
         recViewById.bpmBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
@@ -135,7 +153,7 @@ class RecommendationActivity : AppCompatActivity() {
                     fromUser: Boolean
                 ) {
                     if (fromUser) {
-                        var bpm = progress*100
+                        var bpm = progress*10
                         recViewById.bpmValueTextView.text = bpm.toString()
                     }
                 }
@@ -148,7 +166,8 @@ class RecommendationActivity : AppCompatActivity() {
         // keys Bar - actual range: [0,11]
         recViewById.keysBar.min = 0
         recViewById.keysBar.max = 11
-        recViewById.keysBar.progress = keysVal
+        recViewById.keysBar.progress = keyVal
+        recViewById.keysValueTextView.text = keyVal.toString()
         recViewById.keysBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
@@ -157,8 +176,8 @@ class RecommendationActivity : AppCompatActivity() {
                     fromUser: Boolean
                 ) {
                     if (fromUser) {
-                        var keys = progress
-                        recViewById.keysValueTextView.text = keys.toString()
+                        var key = progress
+                        recViewById.keysValueTextView.text = key.toString()
                     }
                 }
                 override fun onStartTrackingTouch(p0: SeekBar) {
@@ -170,7 +189,8 @@ class RecommendationActivity : AppCompatActivity() {
         // danceability Bar - actual range: [0,1]
         recViewById.danceabilityBar.min = 0
         recViewById.danceabilityBar.max = 10
-        recViewById.danceabilityBar.progress = danceabilityVal*10
+        recViewById.danceabilityBar.progress = (danceabilityVal*10).toInt()
+        recViewById.danceabilityValueTextView.text = ("%.1f".format(danceabilityVal))
         recViewById.danceabilityBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
@@ -193,7 +213,8 @@ class RecommendationActivity : AppCompatActivity() {
         // valenceValue Bar - actual range: [0,1]
         recViewById.valenceBar.min = 0
         recViewById.valenceBar.max = 10
-        recViewById.valenceBar.progress = valenceVal*10
+        recViewById.valenceBar.progress = (valenceVal*10).toInt()
+        recViewById.valenceValueTextView.text = ("%.1f".format(valenceVal))
         recViewById.valenceBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
@@ -215,9 +236,10 @@ class RecommendationActivity : AppCompatActivity() {
 
 
         // energy Bar - actual range: [0,10]
-        recViewById.energyBar.min = 1
+        recViewById.energyBar.min = 0
         recViewById.energyBar.max = 10
-        recViewById.energyBar.progress = energyVal
+        recViewById.energyBar.progress = energyVal.toInt()
+        recViewById.energyValueTextView.text = ("%.0f".format(energyVal))
         recViewById.energyBar.setOnSeekBarChangeListener(
             object : SeekBar.OnSeekBarChangeListener {
                 override fun onProgressChanged(
@@ -257,9 +279,20 @@ class RecommendationActivity : AppCompatActivity() {
                             mp.pause()
                             recViewById.rootLayout.setBackgroundColor(Color.WHITE)
                             // refresh current activity
-                            val intent = intent
-                            finish()
-                            startActivity(intent)
+                            if (!MainActivity.songList.isEmpty()) {
+                                val intent = intent
+                                finish()
+                                startActivity(intent)
+                            } else {
+                                val store = SongStore()
+                                song.songId?.let{store.readSong(this@RecommendationActivity, it) {
+                                    val intent = intent
+                                    finish()
+                                    startActivity(intent)
+                                } }
+                            }
+
+
                         }
                     }
                     handler.postDelayed(refresh, 2000)
@@ -273,7 +306,7 @@ class RecommendationActivity : AppCompatActivity() {
                         "Undo", // Action button text
                         { // UNDO Action button click listener
                             recViewById.rootLayout.setBackgroundColor(Color.WHITE)
-                            handler.removeCallbacks(refresh);
+                            handler.removeCallbacks(refresh)
                         }
                     ).setDuration(
                         2000
@@ -291,13 +324,23 @@ class RecommendationActivity : AppCompatActivity() {
                             mp.pause()
                             recViewById.rootLayout.setBackgroundColor(Color.WHITE)
                             // refresh current activity
-                            val intent = intent
-                            finish()
-                            startActivity(intent)
+                            if (!MainActivity.songList.isEmpty()) {
+                                val intent = intent
+                                finish()
+                                startActivity(intent)
+                            } else {
+                                val store = SongStore()
+                                song.songId?.let{store.readSong(this@RecommendationActivity, it) {
+                                    val intent = intent
+                                    finish()
+                                    startActivity(intent)
+                                } }
+                            }
                         }
                     }
                     handler.postDelayed(refresh, 2000)
 
+                    MainActivity.LikedSongList.add(song)
                     // Show a snack bar for undo option
                     Snackbar.make(
                         recViewById.rootLayout, // Parent view
@@ -307,13 +350,15 @@ class RecommendationActivity : AppCompatActivity() {
                         "Undo", // Action button text
                         { // UNDO Action button click listener
                             recViewById.rootLayout.setBackgroundColor(Color.WHITE)
-                            handler.removeCallbacks(refresh);
+                            MainActivity.LikedSongList.remove(song)
+                            handler.removeCallbacks(refresh)
                         }
                     ).setDuration(
                         2000
                     ).withColor(Color.parseColor("#A5CA40")
                     ).show() // Finally show the snack bar
                 }
+
             }
         }
         return false
@@ -337,18 +382,31 @@ class RecommendationActivity : AppCompatActivity() {
     }
 
     fun endBtnClick(v: View) {
+        mp.pause()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
+        finish()
+    }
+
+    fun openSpotify(view: View) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse("spotify:track:" + "61bwFjzXGG1x2aZsANdLyl") //test track
+        //intent.data = Uri.parse("spotify:track:" + trackid)
+
+        intent.putExtra(
+            Intent.EXTRA_REFERRER,
+            Uri.parse("android://" + this.packageName)
+        )
+        this.startActivity(intent)
     }
 
 
     fun settingDoneBtnClick(v: View) {
-        bpmVal = recViewById.bpmBar.progress
-        keysVal = recViewById.keysBar.progress
-        danceabilityVal = recViewById.danceabilityBar.progress
-        valenceVal = recViewById.valenceBar.progress
-        energyVal = recViewById.energyBar.progress
-
+//        bpmVal = recViewById.bpmBar.progress.toDouble()
+//        keyVal = recViewById.keysBar.progress
+//        danceabilityVal = recViewById.danceabilityBar.progress.toDouble()
+//        valenceVal = recViewById.valenceBar.progress.toDouble()
+//        energyVal = recViewById.energyBar.progress.toDouble()
         recViewById.settingPanel.setVisibility(View.GONE);
     }
 

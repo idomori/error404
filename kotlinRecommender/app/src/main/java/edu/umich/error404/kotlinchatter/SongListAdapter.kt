@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import com.squareup.picasso.Picasso
 import edu.umich.error404.kotlinchatter.databinding.ListitemChattBinding
 
 class SongListAdapter(context: Context, users: ArrayList<Song?>) :
@@ -20,10 +21,7 @@ class SongListAdapter(context: Context, users: ArrayList<Song?>) :
         item?.run {
             listItemViewById.songTextView.text = songName
             listItemViewById.artistTextView.text = artistName
-            listItemViewById.keyTextView.text = "Key = " + key
-            listItemViewById.tempoTextView.text = "BPM = " + bpm
-            listItemViewById.danceabilityTextView.text = "Danceability = " + danceability
-           // Picasso.get().load(image_url).into(listItemViewById.albumImageView)
+            Picasso.get().load(image_url).into(listItemViewById.albumImageView)
         }
         return listItemViewById.root
     }
