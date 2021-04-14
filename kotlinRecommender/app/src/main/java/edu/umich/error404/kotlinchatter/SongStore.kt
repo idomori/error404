@@ -17,25 +17,21 @@ class SongStore {
 
     fun readPlaylist(context: Context, url: String, completion: () -> Unit) {
         val queue = newRequestQueue(context)
-        val jsonObj = mapOf(
-                "track_id" to url
+
+        val temp = serverUrl+"read_playlist/?playlist_id="+url
+        val getRequest = JsonObjectRequest(temp, null,
+            { response ->
+                val songsReceived = try { response.getJSONArray("result") } catch (e: JSONException) { JSONArray() }
+                val songEntry = songsReceived[0] as JSONObject
+                songFeature = songEntry
+                getSongInfo(context) {}
+            },
+            { error ->
+                // TODO: Handle error
+                println(error.message)
+            }
         )
-
-        val postRequest = JsonObjectRequest(serverUrl+"read_playlist/", JSONObject(jsonObj),
-
-                { response ->
-                    val songsReceived = try { response.getJSONArray("songs") } catch (e: JSONException) { JSONArray() }
-                    val songEntry = songsReceived[0] as JSONObject
-                    songFeature = songEntry
-                    getSongInfo(context) {}
-                },
-                { error ->
-                    // TODO: Handle error
-                    println(error.message)
-                }
-        )
-
-        queue.add(postRequest)
+        queue.add(getRequest)
     }
 
     fun readSong(context: Context, url: String, completion: () -> Unit) {
