@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KotlinChatter">
-        <activity android:name=".HiphopActivity"></activity>
-        <activity android:name=".ImportActivity"></activity>
+        <activity android:name=".searchActivity"></activity>
+        <activity android:name=".HiphopActivity" />
+        <activity android:name=".ImportActivity" />
         <activity android:name=".StartingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,9 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RecommendationActivity" />
-        <activity android:name=".PostActivity"/>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".PostActivity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

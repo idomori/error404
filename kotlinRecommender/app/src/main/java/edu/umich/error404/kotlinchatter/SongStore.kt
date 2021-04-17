@@ -1,8 +1,6 @@
 package edu.umich.error404.kotlinchatter
 
 import android.content.Context
-import android.content.Intent
-import androidx.core.content.ContextCompat.startActivity
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley.newRequestQueue
 import org.json.JSONArray
@@ -69,6 +67,73 @@ class SongStore{
         queue.add(getRequest)
     }
 
+    fun submitSongName(context: Context, songName : String, completion: () -> Unit){
+        val queue = newRequestQueue(context)
+        //search_playlist/?playlist_name_name=**input**&search_for=track
+        val temp = serverUrl+"search_playlist/?playlist_name=" + songName +  "&search_for=track"
+        //val temp = serverUrl+"search_playlist/?playlist_name=**input**&search_for=playlist\n"
+        val getRequest = JsonObjectRequest(temp, null,
+                { response ->
+                    val songsReceived = try {
+                        response.getJSONArray("result")
+                    } catch (e: JSONException) {
+                        JSONArray()
+                    }
+                    for (i in 0 until songsReceived.length()) {
+                        val songEntry = songsReceived[i] as List<String>
+
+                        searchActivity.songNameList.add(
+                                SongPlaylistSearch(
+                                        image = songEntry[0],
+                                        name = songEntry[1],
+                                        url = songEntry[2]
+                                )
+                        )
+                    }
+                    completion();
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+
+        queue.add(getRequest)
+    }
+
+    fun submitPlaylistName(context: Context, playListName : String, completion: () -> Unit){
+        val queue = newRequestQueue(context)
+        //search_playlist/?playlist_name_name=**input**&search_for=track
+        val temp = serverUrl+"search_playlist/?playlist_name=" + playListName +  "&search_for=playlist"
+
+        val getRequest = JsonObjectRequest(temp, null,
+                { response ->
+                    val songsReceived = try {
+                        response.getJSONArray("result")
+                    } catch (e: JSONException) {
+                        JSONArray()
+                    }
+                    for (i in 0 until songsReceived.length()) {
+                        val songEntry = songsReceived[i] as List<String>
+
+                        searchActivity.songNameList.add(
+                                SongPlaylistSearch(
+                                        image = songEntry[0],
+                                        name = songEntry[1],
+                                        url = songEntry[2]
+                                )
+                        )
+                    }
+                    completion();
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+
+        queue.add(getRequest)
+    }
     // postsong function is deleted from backend
     fun postSong(context: Context, song: Song, completion: () -> Unit) {
         val queue = newRequestQueue(context)
@@ -125,5 +190,7 @@ class SongStore{
             )
         )
     }
+
+
 
 }

@@ -11,7 +11,8 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="72dp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,8 +35,8 @@
         android:id="@+id/songLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="40dp"
         android:width="220dp"
         android:ems="10"
         android:gravity="start|top"
@@ -55,5 +56,69 @@
         android:text="@string/submit"
         app:layout_constraintStart_toEndOf="@+id/songLink"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/songName"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="70dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songLink" />
+
+    <EditText
+        android:id="@+id/playListName"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="70dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songName" />
+
+    <Button
+        android:id="@+id/submitSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:onClick="submitSongName"
+        android:text="@string/submit"
+        app:layout_constraintStart_toEndOf="@+id/songName"
+        app:layout_constraintTop_toBottomOf="@+id/submitLink" />
+
+    <Button
+        android:id="@+id/submitPlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:onClick="submitPlaylistName"
+        android:text="@string/submit"
+        app:layout_constraintStart_toEndOf="@+id/playListName"
+        app:layout_constraintTop_toBottomOf="@+id/submitSong" />
+
+    <TextView
+        android:id="@+id/enterSong"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="30dp"
+        android:text="Or please enter the song name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songLink" />
+
+    <TextView
+        android:id="@+id/enterPlaylist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="30dp"
+        android:text="Or please enter the playlist name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submitSong" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivityImportBinding
 
 class ImportActivity : AppCompatActivity() {
+    private val serverUrl = "https://159.65.222.2/"
     private lateinit var importViewById: ActivityImportBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -41,6 +43,30 @@ class ImportActivity : AppCompatActivity() {
     fun goBack(view: View?) {
         val intent = Intent(this, StartingActivity::class.java)
         startActivity(intent)
+    }
+
+    fun submitSongName(view: View?){
+        val store = SongStore()
+
+        val songName = importViewById.songName.text.toString()
+
+        store.submitSongName(this, songName){
+            val intent = Intent(this, searchActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    fun submitPlaylistName(view: View?){
+        val store = SongStore()
+
+        val playListName = importViewById.playListName.text.toString()
+
+        store.submitPlaylistName(this, playListName){
+            val intent = Intent(this, searchActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     /*
