@@ -96,8 +96,6 @@ class HiphopActivity : AppCompatActivity() {
             //albumImageView.setImageURI(albumCovers.get(position))
             Picasso.get().load(albumCovers.get(position)).into(albumImageView)
 
-
-
             val grayColor = Color.parseColor("#d3d3d3")
 
             if (position % 2 == 0) {
