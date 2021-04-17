@@ -14,7 +14,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewById: ActivityMainBinding
     companion object {
         @JvmField
-        //var songsList = arrayListOf<Song>()
+        // audio feature range
+        var settingEnabled:Boolean = false
+        var minBpm:Double = 0.0
+        var maxBpm:Double = 300.0
+        var minKey:Int = 0
+        var maxKey:Int = 11
+        var minDanceability:Double = 0.0
+        var maxDanceability:Double = 1.0
+        var minValence:Double = 0.0
+        var maxValence:Double = 1.0
+        var minEnergy:Double = 0.0
+        var maxEnergy:Double = 1.0
+
+        // information about the seeding song/playlist
+        var seedingUrl:String = ""
+        var seedingType:String = ""
+
+        // song storage
         var songList: Queue<Song> = LinkedList<Song>()
         var LikedSongList = arrayListOf<Song>()
     }

@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "edu.umich.kyuhyunp.kotlinchatter"
+        applicationId "edu.umich.error404.kotlinchatter"
         minSdkVersion 29
         targetSdkVersion 29
         versionCode 1

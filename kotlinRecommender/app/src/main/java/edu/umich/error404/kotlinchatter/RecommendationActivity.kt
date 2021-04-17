@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso
 import edu.umich.error404.kotlinchatter.databinding.ActivityRecommendationBinding
 import org.florescu.android.rangeseekbar.RangeSeekBar
 import kotlin.math.abs
+import kotlin.random.Random
 
 
 class RecommendationActivity : AppCompatActivity() {
@@ -158,134 +159,22 @@ class RecommendationActivity : AppCompatActivity() {
     }
 
     fun initSettingRangeBars() {
-        //RangeSeekBar<Int> = new
-        //recViewById.bpmRangeBar.setSelectedMinValue(0)
-        recViewById.bpmRangeBar.setSelectedMaxValue(150)
-        recViewById.danceabilityRangeBar.setSelectedMinValue(3)
+        recViewById.bpmRangeBar.setSelectedMinValue(MainActivity.minBpm)
+        recViewById.bpmRangeBar.setSelectedMaxValue(MainActivity.maxBpm)
+
+        recViewById.keysRangeBar.setSelectedMinValue(MainActivity.minKey)
+        recViewById.keysRangeBar.setSelectedMaxValue(MainActivity.maxKey)
+
+        recViewById.danceabilityRangeBar.setSelectedMinValue(MainActivity.minDanceability)
+        recViewById.danceabilityRangeBar.setSelectedMaxValue(MainActivity.maxDanceability)
+
+        recViewById.valenceRangeBar.setSelectedMinValue(MainActivity.minValence)
+        recViewById.valenceRangeBar.setSelectedMaxValue(MainActivity.maxValence)
+
+        recViewById.energyRangeBar.setSelectedMinValue(MainActivity.minEnergy)
+        recViewById.energyRangeBar.setSelectedMaxValue(MainActivity.maxEnergy)
     }
 
-//    fun initSettingBars() {
-//        // bpm Bar - actual range: [0,300]
-//        recViewById.bpmBar.min = 0
-//        recViewById.bpmBar.max = 30
-//        recViewById.bpmBar.progress = (bpmVal/10).toInt()
-//        var temp: Int = (bpmVal/10).toInt()
-//        temp = temp*10
-//        recViewById.bpmValueTextView.text = (temp).toString()
-//        recViewById.bpmBar.setOnSeekBarChangeListener(
-//            object : SeekBar.OnSeekBarChangeListener {
-//                override fun onProgressChanged(
-//                    seekbar: SeekBar?,
-//                    progress: Int,
-//                    fromUser: Boolean
-//                ) {
-//                    if (fromUser) {
-//                        var bpm = progress*10
-//                        recViewById.bpmValueTextView.text = bpm.toString()
-//                    }
-//                }
-//                override fun onStartTrackingTouch(p0: SeekBar) {
-//                }
-//                override fun onStopTrackingTouch(p0: SeekBar) {
-//                }
-//            }
-//        )
-//        // keys Bar - actual range: [0,11]
-//        recViewById.keysBar.min = 0
-//        recViewById.keysBar.max = 11
-//        recViewById.keysBar.progress = keyVal
-//        recViewById.keysValueTextView.text = keyVal.toString()
-//        recViewById.keysBar.setOnSeekBarChangeListener(
-//            object : SeekBar.OnSeekBarChangeListener {
-//                override fun onProgressChanged(
-//                    seekbar: SeekBar?,
-//                    progress: Int,
-//                    fromUser: Boolean
-//                ) {
-//                    if (fromUser) {
-//                        var key = progress
-//                        recViewById.keysValueTextView.text = key.toString()
-//                    }
-//                }
-//                override fun onStartTrackingTouch(p0: SeekBar) {
-//                }
-//                override fun onStopTrackingTouch(p0: SeekBar) {
-//                }
-//            }
-//        )
-//        // danceability Bar - actual range: [0,1]
-//        recViewById.danceabilityBar.min = 0
-//        recViewById.danceabilityBar.max = 10
-//        recViewById.danceabilityBar.progress = (danceabilityVal*10).toInt()
-//        recViewById.danceabilityValueTextView.text = ("%.1f".format(danceabilityVal))
-//        recViewById.danceabilityBar.setOnSeekBarChangeListener(
-//            object : SeekBar.OnSeekBarChangeListener {
-//                override fun onProgressChanged(
-//                    seekbar: SeekBar?,
-//                    progress: Int,
-//                    fromUser: Boolean
-//                ) {
-//                    if (fromUser) {
-//                        var danceability : Double = progress.toDouble()/10
-//                        recViewById.danceabilityValueTextView.text = danceability.toString()
-//                    }
-//                }
-//                override fun onStartTrackingTouch(p0: SeekBar) {
-//                }
-//                override fun onStopTrackingTouch(p0: SeekBar?) {
-//                }
-//            }
-//        )
-//
-//        // valenceValue Bar - actual range: [0,1]
-//        recViewById.valenceBar.min = 0
-//        recViewById.valenceBar.max = 10
-//        recViewById.valenceBar.progress = (valenceVal*10).toInt()
-//        recViewById.valenceValueTextView.text = ("%.1f".format(valenceVal))
-//        recViewById.valenceBar.setOnSeekBarChangeListener(
-//            object : SeekBar.OnSeekBarChangeListener {
-//                override fun onProgressChanged(
-//                    seekbar: SeekBar?,
-//                    progress: Int,
-//                    fromUser: Boolean
-//                ) {
-//                    if (fromUser) {
-//                        var valence : Double = progress.toDouble()/10
-//                        recViewById.valenceValueTextView.text = valence.toString()
-//                    }
-//                }
-//                override fun onStartTrackingTouch(p0: SeekBar) {
-//                }
-//                override fun onStopTrackingTouch(p0: SeekBar?) {
-//                }
-//            }
-//        )
-//
-//
-//        // energy Bar - actual range: [0,10]
-//        recViewById.energyBar.min = 0
-//        recViewById.energyBar.max = 10
-//        recViewById.energyBar.progress = energyVal.toInt()
-//        recViewById.energyValueTextView.text = ("%.0f".format(energyVal))
-//        recViewById.energyBar.setOnSeekBarChangeListener(
-//            object : SeekBar.OnSeekBarChangeListener {
-//                override fun onProgressChanged(
-//                    seekbar: SeekBar?,
-//                    progress: Int,
-//                    fromUser: Boolean
-//                ) {
-//                    if (fromUser) {
-//                        var energy = progress
-//                        recViewById.energyValueTextView.text = energy.toString()
-//                    }
-//                }
-//                override fun onStartTrackingTouch(p0: SeekBar) {
-//                }
-//                override fun onStopTrackingTouch(p0: SeekBar?) {
-//                }
-//            }
-//        )
-//    }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         super.dispatchTouchEvent(event)
@@ -305,19 +194,18 @@ class RecommendationActivity : AppCompatActivity() {
                         override fun run() {
                             mp.pause()
                             recViewById.rootLayout.setBackgroundColor(Color.WHITE)
-                            // refresh current activity
-                            if (!MainActivity.songList.isEmpty()) {
-                                val intent = intent
-                                finish()
-                                startActivity(intent)
-                            } else {
-                                val store = SongStore()
-                                song.songId?.let {
-                                    store.readSong(this@RecommendationActivity, it) {
-                                        val intent = intent
-                                        finish()
-                                        startActivity(intent)
-                                    }
+                            // remove all songs from the songList, and
+                            MainActivity.songList.clear()
+                            // restart recommendation with 5 random songs from liked song list
+                            var sampleIndex:MutableList<Int> = sampleLikedSong()
+
+                            val store = SongStore()  // TODO: restart recommendation with 5 random songs
+                            song.songId?.let {
+                                store.readSong(this@RecommendationActivity, it) {
+                                    // refresh current activity
+                                    val intent = intent
+                                    finish()
+                                    startActivity(intent)
                                 }
                             }
 
@@ -411,7 +299,35 @@ class RecommendationActivity : AppCompatActivity() {
     }
 
     fun settingBtnClick(v: View) {
-        recViewById.settingPanel.setVisibility(View.VISIBLE);
+        if (MainActivity.settingEnabled == false) {
+            disableSettingBars()
+        }
+        else {
+            enableSettingBars()
+        }
+        recViewById.settingPanel.setVisibility(View.VISIBLE)
+        recViewById.positionBar.isEnabled  = false
+        recViewById.settingBtn.isEnabled = false
+        recViewById.spotifyBtn.isEnabled = false
+        recViewById.endBtn.isEnabled = false
+    }
+
+    fun settingSwitchClick(v: View) {
+        if (recViewById.settingSwitch.isChecked == false) {  //switch OFF
+            MainActivity.settingEnabled = false
+            disableSettingBars()
+            var d = getResources().getDrawable(R.drawable.roundcorner_disabled)
+            recViewById.settingBtn.background = d
+            recViewById.settingBtnLable.text = "Recommander \n Settings \n (Disabled)"
+        }
+        else { // switch ON
+            MainActivity.settingEnabled = true
+            enableSettingBars()
+            var d = getResources().getDrawable(R.drawable.roundcorner)
+            recViewById.settingBtn.background = d
+            recViewById.settingBtnLable.text = "Recommander \n Settings \n (Enabled)"
+
+        }
     }
 
     fun endBtnClick(v: View) {
@@ -423,8 +339,8 @@ class RecommendationActivity : AppCompatActivity() {
 
     fun openSpotify(view: View) {
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse("spotify:track:" + "61bwFjzXGG1x2aZsANdLyl") //test track
-        //intent.data = Uri.parse("spotify:track:" + trackid)
+//        intent.data = Uri.parse("spotify:track:" + "61bwFjzXGG1x2aZsANdLyl") //test track
+        intent.data = Uri.parse("spotify:track:" + song.songId)
 
         intent.putExtra(
             Intent.EXTRA_REFERRER,
@@ -435,12 +351,24 @@ class RecommendationActivity : AppCompatActivity() {
 
 
     fun settingDoneBtnClick(v: View) {
-//        bpmVal = recViewById.bpmBar.progress.toDouble()
-//        keyVal = recViewById.keysBar.progress
-//        danceabilityVal = recViewById.danceabilityBar.progress.toDouble()
-//        valenceVal = recViewById.valenceBar.progress.toDouble()
-//        energyVal = recViewById.energyBar.progress.toDouble()
-        recViewById.settingPanel.setVisibility(View.GONE);
+        // update the audio range values
+        MainActivity.minBpm = recViewById.bpmRangeBar.selectedMinValue.toDouble()
+        MainActivity.maxBpm = recViewById.bpmRangeBar.selectedMaxValue.toDouble()
+        MainActivity.minKey = recViewById.keysRangeBar.selectedMinValue.toInt()
+        MainActivity.maxKey = recViewById.keysRangeBar.selectedMaxValue.toInt()
+        MainActivity.minDanceability = recViewById.danceabilityRangeBar.selectedMinValue.toDouble()
+        MainActivity.maxDanceability = recViewById.danceabilityRangeBar.selectedMaxValue.toDouble()
+        MainActivity.minValence = recViewById.valenceRangeBar.selectedMinValue.toDouble()
+        MainActivity.maxValence = recViewById.valenceRangeBar.selectedMaxValue.toDouble()
+        MainActivity.minEnergy = recViewById.energyRangeBar.selectedMinValue.toDouble()
+        MainActivity.maxEnergy = recViewById.energyRangeBar.selectedMaxValue.toDouble()
+
+        // enable elements in the back
+        recViewById.settingPanel.setVisibility(View.GONE)
+        recViewById.positionBar.isEnabled  = true
+        recViewById.settingBtn.isEnabled = true
+        recViewById.spotifyBtn.isEnabled = true
+        recViewById.endBtn.isEnabled = true
     }
 
     fun createTimeTextView(time: Int): String {
@@ -458,5 +386,46 @@ class RecommendationActivity : AppCompatActivity() {
         return this
     }
 
+    fun enableSettingBars() {
+        recViewById.settingPanel.setBackgroundColor(getResources().getColor(R.color.yellow2))
+        recViewById.bpmRangeBar.isEnabled = true
+        recViewById.keysRangeBar.isEnabled = true
+        recViewById.danceabilityRangeBar.isEnabled = true
+        recViewById.valenceRangeBar.isEnabled = true
+        recViewById.energyRangeBar.isEnabled = true
+    }
+
+
+    fun disableSettingBars() {
+        recViewById.settingPanel.setBackgroundColor(getResources().getColor(R.color.discard))
+        recViewById.bpmRangeBar.isEnabled = false
+        recViewById.keysRangeBar.isEnabled = false
+        recViewById.danceabilityRangeBar.isEnabled = false
+        recViewById.valenceRangeBar.isEnabled = false
+        recViewById.energyRangeBar.isEnabled = false
+
+    }
+
+    fun sampleLikedSong(): MutableList<Int> {
+//        var sampleIndex = mutableListOf<Int>()
+//        // if less than 5 liked songs, no need to sample
+//        if (MainActivity.LikedSongList.size <= 5) {
+//            for(i in 0..MainActivity.LikedSongList.size-1) {
+//                sampleIndex.add(i)
+//            }
+//        }
+//        else {
+//            sampleIndex = List(5) { Random.nextInt(0, MainActivity.LikedSongList.size-1) }.toMutableList()
+//        }
+        var list = MutableList(MainActivity.LikedSongList.size) { index -> 0 + index }
+        var shuffedList = list.shuffled()
+        var size:Int = if (MainActivity.LikedSongList.size <5){ MainActivity.LikedSongList.size} else{5}
+        var sampleIndex = shuffedList.subList(0,size).toMutableList()
+        return sampleIndex
+    }
+
+
+
 
 }
+

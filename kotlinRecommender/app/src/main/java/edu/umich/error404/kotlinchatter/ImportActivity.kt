@@ -18,21 +18,23 @@ class ImportActivity : AppCompatActivity() {
     fun submitSong(view: View?) {
 
         val enteredUrl = importViewById.songLink.text.toString()
+        MainActivity.seedingUrl = enteredUrl
         val store = SongStore()
         if (enteredUrl.contains("playlist", ignoreCase = true)) {
+            MainActivity.seedingType = "playlist"
             store.readPlaylist(this, enteredUrl) {
                 val intent = Intent(this, RecommendationActivity::class.java)
                 startActivity(intent)
             }
         }
         else {
+            MainActivity.seedingType = "song"
             store.readSong(this, enteredUrl) {
                 val intent = Intent(this, RecommendationActivity::class.java)
                 startActivity(intent)
             }
         }
         // populateSongList()
-
 
     }
 
@@ -41,12 +43,9 @@ class ImportActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    /*
     fun populateSongList() {
 
-
-
-
-        /*
         MainActivity.songList.add(
             Song(
                 songName = "Welcome to the Machine",
@@ -215,8 +214,8 @@ class ImportActivity : AppCompatActivity() {
                 preview_url = "https://p.scdn.co/mp3-preview/f744fafea7f807dd79503249f4238a21393daf8f?cid=7a03c05c75c04958926b5213cda242f3"
             )
         )
-*/
-    }
 
+    }
+    */
 
 }

@@ -96,7 +96,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:lineSpacingExtra="1dp"
-        android:text="Swipe Left to Discard the Song \n Swipe Right to Keep the Song \n Or control the recommadation in Setting"
+        android:text="Swipe Left to Discard the Song \n Swipe Right to Keep the Song \n Or control the recommadation in Settings"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -155,7 +155,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/settingBtnLable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -190,15 +190,27 @@
         android:id="@+id/settingPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:background="@color/yellow2"
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+
+        <Switch
+            android:id="@+id/settingSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="settingSwitchClick"
+            android:paddingLeft="15dp"
+            android:text="Enable Audio Settings"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -212,8 +224,10 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:text="BPM"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/bpmRangeBar"
@@ -221,8 +235,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
-                rsb:absoluteMaxValue="300"
-                rsb:absoluteMinValue="0" />
+                rsb:absoluteMaxValue="0.0"
+                rsb:absoluteMinValue="300.0" />
 
         </LinearLayout>
 
@@ -238,8 +252,10 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:text="Keys"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/keysRangeBar"
@@ -247,10 +263,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
-                rsb:absoluteMaxValue="11"
-                rsb:absoluteMinValue="0" />
-
-
+                rsb:absoluteMaxValue="0"
+                rsb:absoluteMinValue="11" />
         </LinearLayout>
 
         <LinearLayout
@@ -265,8 +279,10 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:text="Danceability"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/danceabilityRangeBar"
@@ -274,9 +290,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
-                rsb:absoluteMaxValue="10"
-                rsb:absoluteMinValue="0" />
-
+                rsb:absoluteMaxValue="0.0"
+                rsb:absoluteMinValue="1.0" />
         </LinearLayout>
 
         <LinearLayout
@@ -291,8 +306,10 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:text="Valence"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
@@ -301,8 +318,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
-                rsb:absoluteMaxValue="10"
-                rsb:absoluteMinValue="0" />
+                rsb:absoluteMaxValue="0.0"
+                rsb:absoluteMinValue="1.0" />
 
         </LinearLayout>
 
@@ -319,8 +336,10 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:text="Energy"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/energyRangeBar"
@@ -328,8 +347,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
-                rsb:absoluteMaxValue="0"
-                rsb:absoluteMinValue="10" />
+                rsb:absoluteMaxValue="0.0"
+                rsb:absoluteMinValue="1.0" />
 
         </LinearLayout>
 
@@ -343,7 +362,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/yellow2"
+                android:backgroundTint="@color/yellow"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:onClick="settingDoneBtnClick"
