@@ -9,9 +9,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -33,6 +35,8 @@ class RecommendationActivity : AppCompatActivity() {
     private var valenceVal:Double = 0.0
     private var energyVal:Double = 0.0
 
+    private var preview_url:String = ""
+    private var image_url:String = ""
 
     @SuppressLint("HandlerLeak")
     var handler = object : Handler() {
@@ -44,10 +48,18 @@ class RecommendationActivity : AppCompatActivity() {
 
             // Update Labels
             var elapsedTime = createTimeTextView(currentPosition)
-            recViewById.elapsedTimeTextView.text = elapsedTime
-
             var remainingTime = createTimeTextView(totalTime - currentPosition)
-            recViewById.remainingTimeTextView.text = "-$remainingTime"
+
+            if (preview_url == "null") {
+                recViewById.elapsedTimeTextView.text = "null"
+                recViewById.remainingTimeTextView.text = "null"
+            }
+            else {
+                recViewById.elapsedTimeTextView.text = elapsedTime
+                recViewById.remainingTimeTextView.text = "-$remainingTime"
+            }
+
+
         }
     }
 
@@ -60,11 +72,10 @@ class RecommendationActivity : AppCompatActivity() {
         // Temp toast message to test whether the activity has been refreshed
         // Toast.makeText(applicationContext,"Recommendation Activity Starts",Toast.LENGTH_SHORT).show()
 
-
         song = MainActivity.songList.peek()
         MainActivity.songList.poll()
-        var preview_url = song.preview_url.toString()
-        var image_url = song.image_url.toString()
+        preview_url = song.preview_url.toString()
+        image_url = song.image_url.toString()
         var artist_name = song.artistName
         var song_name = song.songName
         bpmVal = song.bpm!!
@@ -75,6 +86,14 @@ class RecommendationActivity : AppCompatActivity() {
         recViewById.songTitle.text = song_name
         recViewById.artistName.text = artist_name
         //use sample urls for now
+
+        if (preview_url == "null") {
+            val toast = Toast.makeText(applicationContext,
+                "Sorry, this song does not have a preview",
+                Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
+        }
 
 
         // Set MediaPlayer
@@ -90,7 +109,6 @@ class RecommendationActivity : AppCompatActivity() {
                 prepare() // might take long! (for buffering, etc)
                 start()  // Assume we play the music by default
             }
-
         }
         mp.isLooping = true //need to change later
         mp.setVolume(0.5f, 0.5f)
@@ -134,131 +152,135 @@ class RecommendationActivity : AppCompatActivity() {
             }
         }).start()
 
-        initSettingBars()
+        //initSettingBars()
     }
 
-    fun initSettingBars() {
-        // bpm Bar - actual range: [0,300]
-        recViewById.bpmBar.min = 0
-        recViewById.bpmBar.max = 30
-        recViewById.bpmBar.progress = (bpmVal/10).toInt()
-        var temp: Int = (bpmVal/10).toInt()
-        temp = temp*10
-        recViewById.bpmValueTextView.text = (temp).toString()
-        recViewById.bpmBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekbar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    if (fromUser) {
-                        var bpm = progress*10
-                        recViewById.bpmValueTextView.text = bpm.toString()
-                    }
-                }
-                override fun onStartTrackingTouch(p0: SeekBar) {
-                }
-                override fun onStopTrackingTouch(p0: SeekBar) {
-                }
-            }
-        )
-        // keys Bar - actual range: [0,11]
-        recViewById.keysBar.min = 0
-        recViewById.keysBar.max = 11
-        recViewById.keysBar.progress = keyVal
-        recViewById.keysValueTextView.text = keyVal.toString()
-        recViewById.keysBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekbar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    if (fromUser) {
-                        var key = progress
-                        recViewById.keysValueTextView.text = key.toString()
-                    }
-                }
-                override fun onStartTrackingTouch(p0: SeekBar) {
-                }
-                override fun onStopTrackingTouch(p0: SeekBar) {
-                }
-            }
-        )
-        // danceability Bar - actual range: [0,1]
-        recViewById.danceabilityBar.min = 0
-        recViewById.danceabilityBar.max = 10
-        recViewById.danceabilityBar.progress = (danceabilityVal*10).toInt()
-        recViewById.danceabilityValueTextView.text = ("%.1f".format(danceabilityVal))
-        recViewById.danceabilityBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekbar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    if (fromUser) {
-                        var danceability : Double = progress.toDouble()/10
-                        recViewById.danceabilityValueTextView.text = danceability.toString()
-                    }
-                }
-                override fun onStartTrackingTouch(p0: SeekBar) {
-                }
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-                }
-            }
-        )
-
-        // valenceValue Bar - actual range: [0,1]
-        recViewById.valenceBar.min = 0
-        recViewById.valenceBar.max = 10
-        recViewById.valenceBar.progress = (valenceVal*10).toInt()
-        recViewById.valenceValueTextView.text = ("%.1f".format(valenceVal))
-        recViewById.valenceBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekbar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    if (fromUser) {
-                        var valence : Double = progress.toDouble()/10
-                        recViewById.valenceValueTextView.text = valence.toString()
-                    }
-                }
-                override fun onStartTrackingTouch(p0: SeekBar) {
-                }
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-                }
-            }
-        )
-
-
-        // energy Bar - actual range: [0,10]
-        recViewById.energyBar.min = 0
-        recViewById.energyBar.max = 10
-        recViewById.energyBar.progress = energyVal.toInt()
-        recViewById.energyValueTextView.text = ("%.0f".format(energyVal))
-        recViewById.energyBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekbar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    if (fromUser) {
-                        var energy = progress
-                        recViewById.energyValueTextView.text = energy.toString()
-                    }
-                }
-                override fun onStartTrackingTouch(p0: SeekBar) {
-                }
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-                }
-            }
-        )
+    fun initSettingRangeBars() {
+        //RangeSeekBar<Int> = new
     }
+
+//    fun initSettingBars() {
+//        // bpm Bar - actual range: [0,300]
+//        recViewById.bpmBar.min = 0
+//        recViewById.bpmBar.max = 30
+//        recViewById.bpmBar.progress = (bpmVal/10).toInt()
+//        var temp: Int = (bpmVal/10).toInt()
+//        temp = temp*10
+//        recViewById.bpmValueTextView.text = (temp).toString()
+//        recViewById.bpmBar.setOnSeekBarChangeListener(
+//            object : SeekBar.OnSeekBarChangeListener {
+//                override fun onProgressChanged(
+//                    seekbar: SeekBar?,
+//                    progress: Int,
+//                    fromUser: Boolean
+//                ) {
+//                    if (fromUser) {
+//                        var bpm = progress*10
+//                        recViewById.bpmValueTextView.text = bpm.toString()
+//                    }
+//                }
+//                override fun onStartTrackingTouch(p0: SeekBar) {
+//                }
+//                override fun onStopTrackingTouch(p0: SeekBar) {
+//                }
+//            }
+//        )
+//        // keys Bar - actual range: [0,11]
+//        recViewById.keysBar.min = 0
+//        recViewById.keysBar.max = 11
+//        recViewById.keysBar.progress = keyVal
+//        recViewById.keysValueTextView.text = keyVal.toString()
+//        recViewById.keysBar.setOnSeekBarChangeListener(
+//            object : SeekBar.OnSeekBarChangeListener {
+//                override fun onProgressChanged(
+//                    seekbar: SeekBar?,
+//                    progress: Int,
+//                    fromUser: Boolean
+//                ) {
+//                    if (fromUser) {
+//                        var key = progress
+//                        recViewById.keysValueTextView.text = key.toString()
+//                    }
+//                }
+//                override fun onStartTrackingTouch(p0: SeekBar) {
+//                }
+//                override fun onStopTrackingTouch(p0: SeekBar) {
+//                }
+//            }
+//        )
+//        // danceability Bar - actual range: [0,1]
+//        recViewById.danceabilityBar.min = 0
+//        recViewById.danceabilityBar.max = 10
+//        recViewById.danceabilityBar.progress = (danceabilityVal*10).toInt()
+//        recViewById.danceabilityValueTextView.text = ("%.1f".format(danceabilityVal))
+//        recViewById.danceabilityBar.setOnSeekBarChangeListener(
+//            object : SeekBar.OnSeekBarChangeListener {
+//                override fun onProgressChanged(
+//                    seekbar: SeekBar?,
+//                    progress: Int,
+//                    fromUser: Boolean
+//                ) {
+//                    if (fromUser) {
+//                        var danceability : Double = progress.toDouble()/10
+//                        recViewById.danceabilityValueTextView.text = danceability.toString()
+//                    }
+//                }
+//                override fun onStartTrackingTouch(p0: SeekBar) {
+//                }
+//                override fun onStopTrackingTouch(p0: SeekBar?) {
+//                }
+//            }
+//        )
+//
+//        // valenceValue Bar - actual range: [0,1]
+//        recViewById.valenceBar.min = 0
+//        recViewById.valenceBar.max = 10
+//        recViewById.valenceBar.progress = (valenceVal*10).toInt()
+//        recViewById.valenceValueTextView.text = ("%.1f".format(valenceVal))
+//        recViewById.valenceBar.setOnSeekBarChangeListener(
+//            object : SeekBar.OnSeekBarChangeListener {
+//                override fun onProgressChanged(
+//                    seekbar: SeekBar?,
+//                    progress: Int,
+//                    fromUser: Boolean
+//                ) {
+//                    if (fromUser) {
+//                        var valence : Double = progress.toDouble()/10
+//                        recViewById.valenceValueTextView.text = valence.toString()
+//                    }
+//                }
+//                override fun onStartTrackingTouch(p0: SeekBar) {
+//                }
+//                override fun onStopTrackingTouch(p0: SeekBar?) {
+//                }
+//            }
+//        )
+//
+//
+//        // energy Bar - actual range: [0,10]
+//        recViewById.energyBar.min = 0
+//        recViewById.energyBar.max = 10
+//        recViewById.energyBar.progress = energyVal.toInt()
+//        recViewById.energyValueTextView.text = ("%.0f".format(energyVal))
+//        recViewById.energyBar.setOnSeekBarChangeListener(
+//            object : SeekBar.OnSeekBarChangeListener {
+//                override fun onProgressChanged(
+//                    seekbar: SeekBar?,
+//                    progress: Int,
+//                    fromUser: Boolean
+//                ) {
+//                    if (fromUser) {
+//                        var energy = progress
+//                        recViewById.energyValueTextView.text = energy.toString()
+//                    }
+//                }
+//                override fun onStartTrackingTouch(p0: SeekBar) {
+//                }
+//                override fun onStopTrackingTouch(p0: SeekBar?) {
+//                }
+//            }
+//        )
+//    }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         super.dispatchTouchEvent(event)
@@ -285,11 +307,13 @@ class RecommendationActivity : AppCompatActivity() {
                                 startActivity(intent)
                             } else {
                                 val store = SongStore()
-                                song.songId?.let{store.readSong(this@RecommendationActivity, it) {
-                                    val intent = intent
-                                    finish()
-                                    startActivity(intent)
-                                } }
+                                song.songId?.let {
+                                    store.readSong(this@RecommendationActivity, it) {
+                                        val intent = intent
+                                        finish()
+                                        startActivity(intent)
+                                    }
+                                }
                             }
 
 
@@ -310,7 +334,8 @@ class RecommendationActivity : AppCompatActivity() {
                         }
                     ).setDuration(
                         2000
-                    ).withColor(Color.parseColor("#F38D6D")
+                    ).withColor(
+                        Color.parseColor("#F38D6D")
                     ).show() // Finally show the snack bar
 
 
@@ -330,11 +355,13 @@ class RecommendationActivity : AppCompatActivity() {
                                 startActivity(intent)
                             } else {
                                 val store = SongStore()
-                                song.songId?.let{store.readSong(this@RecommendationActivity, it) {
-                                    val intent = intent
-                                    finish()
-                                    startActivity(intent)
-                                } }
+                                song.songId?.let {
+                                    store.readSong(this@RecommendationActivity, it) {
+                                        val intent = intent
+                                        finish()
+                                        startActivity(intent)
+                                    }
+                                }
                             }
                         }
                     }
@@ -355,7 +382,8 @@ class RecommendationActivity : AppCompatActivity() {
                         }
                     ).setDuration(
                         2000
-                    ).withColor(Color.parseColor("#A5CA40")
+                    ).withColor(
+                        Color.parseColor("#A5CA40")
                     ).show() // Finally show the snack bar
                 }
 
