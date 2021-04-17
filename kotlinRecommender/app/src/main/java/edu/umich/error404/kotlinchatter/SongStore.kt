@@ -70,7 +70,8 @@ class SongStore{
     fun submitSongName(context: Context, songName : String, completion: () -> Unit){
         val queue = newRequestQueue(context)
         //search_playlist/?playlist_name_name=**input**&search_for=track
-        val temp = serverUrl+"search_playlist/?playlist_name=" + songName +  "&search_for=track"
+        val temp = serverUrl+"search_playlist/?search_param=" + songName +  "&search_for=track"
+
         //val temp = serverUrl+"search_playlist/?playlist_name=**input**&search_for=playlist\n"
         val getRequest = JsonObjectRequest(temp, null,
                 { response ->
@@ -104,7 +105,7 @@ class SongStore{
     fun submitPlaylistName(context: Context, playListName : String, completion: () -> Unit){
         val queue = newRequestQueue(context)
         //search_playlist/?playlist_name_name=**input**&search_for=track
-        val temp = serverUrl+"search_playlist/?playlist_name=" + playListName +  "&search_for=playlist"
+        val temp = serverUrl+"search_playlist/?search_param=" + playListName +  "&search_for=playlist"
 
         val getRequest = JsonObjectRequest(temp, null,
                 { response ->
