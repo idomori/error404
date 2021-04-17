@@ -51,7 +51,8 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
     implementation 'com.squareup.picasso:picasso:2.71828'
-    compile 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
+    api 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
+    //compile 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.4.0-SNAPSHOT'
     apply plugin: 'com.android.application'
     repositories {
         maven {

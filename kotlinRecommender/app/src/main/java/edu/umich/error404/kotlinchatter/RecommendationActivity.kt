@@ -19,7 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import edu.umich.error404.kotlinchatter.databinding.ActivityRecommendationBinding
+import org.florescu.android.rangeseekbar.RangeSeekBar
 import kotlin.math.abs
+
 
 class RecommendationActivity : AppCompatActivity() {
     private lateinit var recViewById: ActivityRecommendationBinding
@@ -58,8 +60,6 @@ class RecommendationActivity : AppCompatActivity() {
                 recViewById.elapsedTimeTextView.text = elapsedTime
                 recViewById.remainingTimeTextView.text = "-$remainingTime"
             }
-
-
         }
     }
 
@@ -88,13 +88,14 @@ class RecommendationActivity : AppCompatActivity() {
         //use sample urls for now
 
         if (preview_url == "null") {
-            val toast = Toast.makeText(applicationContext,
+            val toast = Toast.makeText(
+                applicationContext,
                 "Sorry, this song does not have a preview",
-                Toast.LENGTH_SHORT)
+                Toast.LENGTH_SHORT
+            )
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
-
 
         // Set MediaPlayer
         mp = MediaPlayer().apply {
@@ -153,10 +154,14 @@ class RecommendationActivity : AppCompatActivity() {
         }).start()
 
         //initSettingBars()
+        initSettingRangeBars()
     }
 
     fun initSettingRangeBars() {
         //RangeSeekBar<Int> = new
+        //recViewById.bpmRangeBar.setSelectedMinValue(0)
+        recViewById.bpmRangeBar.setSelectedMaxValue(150)
+        recViewById.danceabilityRangeBar.setSelectedMinValue(3)
     }
 
 //    fun initSettingBars() {

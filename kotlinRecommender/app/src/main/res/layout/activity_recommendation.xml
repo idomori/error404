@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rsb="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:rsb="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -195,7 +194,7 @@
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -218,11 +217,12 @@
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/bpmRangeBar"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                rsb:absoluteMaxValue="150"
-                rsb:absoluteMinValue="20" />
-
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="15dp"
+                rsb:absoluteMaxValue="300"
+                rsb:absoluteMinValue="0" />
 
         </LinearLayout>
 
@@ -243,7 +243,7 @@
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/keysRangeBar"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
@@ -270,13 +270,12 @@
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/danceabilityRangeBar"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
                 rsb:absoluteMaxValue="10"
                 rsb:absoluteMinValue="0" />
-
 
         </LinearLayout>
 
@@ -298,7 +297,7 @@
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/valenceRangeBar"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
@@ -325,12 +324,12 @@
 
             <org.florescu.android.rangeseekbar.RangeSeekBar
                 android:id="@+id/energyRangeBar"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="15dp"
-                rsb:absoluteMaxValue="10"
-                rsb:absoluteMinValue="0" />
+                rsb:absoluteMaxValue="0"
+                rsb:absoluteMinValue="10" />
 
         </LinearLayout>
 
