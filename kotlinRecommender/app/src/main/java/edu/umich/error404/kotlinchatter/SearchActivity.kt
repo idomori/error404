@@ -1,26 +1,32 @@
 package edu.umich.error404.kotlinchatter
 
 import android.os.Bundle
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivitySearchBinding
-import java.util.*
 
 class SearchActivity : AppCompatActivity() {
     // private lateinit var songs: SongListAdapter
     private lateinit var searchViewById: ActivitySearchBinding
+    private lateinit var songs: SearchListAdapter
 
     companion object {
         @JvmField
-        var songNameList: Queue<SongPlaylistSearch> = LinkedList<SongPlaylistSearch>()
+        var songNameList = arrayListOf<SongPlaylistSearch>()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
 
-        val listView = findViewById<ListView>(R.id.hiphop_songlist)
+        searchViewById = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(searchViewById.root)
 
-        listView.adapter = HiphopActivity.MyCustomAdapter(this)
+        songs =  SearchListAdapter(this, ArrayList())
+        searchViewById.songPlaylistListView.setAdapter(songs)
+
+        for (i in 0 until songNameList.size) {
+            songs.add(songNameList[i])
+        }
     }
+
+
 }

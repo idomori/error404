@@ -232,7 +232,7 @@ class SongStore{
                     for (i in 0 until songsReceived.length()) {
                         val songEntry = songsReceived[i] as List<String>
 
-                        SearchActivity.songNameList.add(
+                        SearchActivity.songNameList[i] = (
                                 SongPlaylistSearch(
                                         image = songEntry[0],
                                         name = songEntry[1],
