@@ -202,8 +202,20 @@ class RecommendationActivity : AppCompatActivity() {
             if (MainActivity.settingEnabled) {
                 store.readPlayListWithAudioRange(this, MainActivity.seedingUrl){
                     val intent = intent
-                    finish()
-                    startActivity(intent)
+                    if(MainActivity.songList.isEmpty()) {
+                        val toast = Toast.makeText(
+                                applicationContext,
+                                "Sorry. We can not find any recommendations within this range. Please reconfigure.",
+                                Toast.LENGTH_SHORT
+                        )
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                        MainActivity.LikedSongList.remove(song)
+                    }
+                    else {
+                        finish()
+                        startActivity(intent)
+                    }
                 }
             }
             else {
@@ -220,8 +232,20 @@ class RecommendationActivity : AppCompatActivity() {
             if (MainActivity.settingEnabled) {
                 store.readSongWithAudioRange(this, MainActivity.seedingUrl){
                     val intent = intent
-                    finish()
-                    startActivity(intent)
+                    if(MainActivity.songList.isEmpty()) {
+                        val toast = Toast.makeText(
+                                applicationContext,
+                                "Sorry. We can not find any recommendations within this range. Please reconfigure.",
+                                Toast.LENGTH_SHORT
+                        )
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                        MainActivity.LikedSongList.remove(song)
+                    }
+                    else {
+                        finish()
+                        startActivity(intent)
+                    }
                 }
             }
             else {
@@ -248,8 +272,21 @@ class RecommendationActivity : AppCompatActivity() {
             store.updateRecWithAudioRange(this@RecommendationActivity, sampledTrackIds) {
                 // refresh current activity
                 val intent = intent
-                finish()
-                startActivity(intent)
+                if(MainActivity.songList.isEmpty()) {
+                    val toast = Toast.makeText(
+                            applicationContext,
+                            "Sorry. We can not find any recommendations within this range. Please reconfigure.",
+                            Toast.LENGTH_SHORT
+                    )
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
+                    MainActivity.LikedSongList.remove(song)
+                }
+                else {
+                    finish()
+                    startActivity(intent)
+                }
+
             }
         }
         else {

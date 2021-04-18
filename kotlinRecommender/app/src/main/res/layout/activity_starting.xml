@@ -47,8 +47,8 @@
         android:id="@+id/genre1"
         android:layout_width="100dp"
         android:layout_height="60dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="28dp"
         android:onClick="chooseHiphop"
         android:text="Hip-Hop"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,33 +58,41 @@
         android:id="@+id/genre3"
         android:layout_width="100dp"
         android:layout_height="60dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:onClick="choosePop"
         android:text="Pop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genre1" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/genre1"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/genre1"
+        app:layout_constraintTop_toBottomOf="@+id/genre1"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/genre4"
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="36dp"
         android:onClick="chooseRock"
         android:text="Rock"
-        app:layout_constraintStart_toEndOf="@+id/genre3"
-        app:layout_constraintTop_toBottomOf="@+id/genre2" />
+        app:layout_constraintBottom_toBottomOf="@+id/genre3"
+        app:layout_constraintEnd_toEndOf="@+id/genre2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/genre2"
+        app:layout_constraintTop_toTopOf="@+id/genre3" />
 
     <Button
         android:id="@+id/genre2"
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="50dp"
         android:onClick="chooseEDM"
         android:text="EDM"
+        app:layout_constraintBottom_toBottomOf="@+id/genre1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.115"
         app:layout_constraintStart_toEndOf="@+id/genre1"
-        app:layout_constraintTop_toBottomOf="@+id/app_description" />
+        app:layout_constraintTop_toTopOf="@+id/genre1"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="335dp"
-        android:layout_height="148dp"
-        android:layout_marginStart="36dp"
+        android:layout_width="416dp"
+        android:layout_height="140dp"
         android:layout_marginTop="72dp"
         android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/import_description" />
@@ -35,8 +35,8 @@
         android:id="@+id/songLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="8dp"
         android:width="220dp"
         android:ems="10"
         android:gravity="start|top"
@@ -63,8 +63,8 @@
         android:id="@+id/songName"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="268dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="248dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Example: \nDespacito"
@@ -76,12 +76,11 @@
         android:id="@+id/playListName"
         android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Example: \nLil Nas X"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/songName"
         app:layout_constraintEnd_toEndOf="@+id/songName"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/songLink" />
@@ -90,35 +89,37 @@
         android:id="@+id/submitSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="196dp"
-        android:layout_marginEnd="36dp"
         android:onClick="submitSongName"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="@+id/songName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.818"
-        app:layout_constraintStart_toEndOf="@+id/songName"
-        app:layout_constraintTop_toBottomOf="@+id/submitLink"
-        app:layout_constraintVertical_bias="0.891" />
+        app:layout_constraintEnd_toEndOf="@+id/submitPlaylist"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="@+id/submitPlaylist"
+        app:layout_constraintTop_toTopOf="@+id/songName"
+        app:layout_constraintVertical_bias="0.617" />
 
     <Button
         android:id="@+id/submitPlaylist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
         android:onClick="submitPlaylistName"
         android:text="@string/submit"
         app:layout_constraintBottom_toBottomOf="@+id/playListName"
-        app:layout_constraintStart_toStartOf="@+id/submitSong" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/playListName"
+        app:layout_constraintTop_toTopOf="@+id/playListName" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/song_or_artist_text"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="319dp" />
+        android:layout_width="396dp"
+        android:layout_height="177dp"
+        app:layout_constraintBottom_toTopOf="@+id/playListName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/songLink"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/song_or_artist_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
