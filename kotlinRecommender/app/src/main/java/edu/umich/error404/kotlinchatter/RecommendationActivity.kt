@@ -154,8 +154,26 @@ class RecommendationActivity : AppCompatActivity() {
             }
         }).start()
 
-        //initSettingBars()
+        initSettingBtn()
         initSettingRangeBars()
+
+    }
+
+    fun initSettingBtn() {
+        if (MainActivity.settingEnabled == false) {
+            disableSettingBars()
+            recViewById.settingSwitch.isChecked = false
+            var d = getResources().getDrawable(R.drawable.roundcorner_disabled)
+            recViewById.settingBtn.background = d
+            recViewById.settingBtnLable.text = "Recommander \n Settings \n (Disabled)"
+        }
+        else {
+            enableSettingBars()
+            recViewById.settingSwitch.isChecked = true
+            var d = getResources().getDrawable(R.drawable.roundcorner)
+            recViewById.settingBtn.background = d
+            recViewById.settingBtnLable.text = "Recommander \n Settings \n (Enabled)"
+        }
     }
 
     fun initSettingRangeBars() {
@@ -300,9 +318,11 @@ class RecommendationActivity : AppCompatActivity() {
 
     fun settingBtnClick(v: View) {
         if (MainActivity.settingEnabled == false) {
+            recViewById.settingSwitch.isChecked = false
             disableSettingBars()
         }
         else {
+            recViewById.settingSwitch.isChecked = true
             enableSettingBars()
         }
         recViewById.settingPanel.setVisibility(View.VISIBLE)
@@ -407,16 +427,7 @@ class RecommendationActivity : AppCompatActivity() {
     }
 
     fun sampleLikedSong(): MutableList<Int> {
-//        var sampleIndex = mutableListOf<Int>()
-//        // if less than 5 liked songs, no need to sample
-//        if (MainActivity.LikedSongList.size <= 5) {
-//            for(i in 0..MainActivity.LikedSongList.size-1) {
-//                sampleIndex.add(i)
-//            }
-//        }
-//        else {
-//            sampleIndex = List(5) { Random.nextInt(0, MainActivity.LikedSongList.size-1) }.toMutableList()
-//        }
+
         var list = MutableList(MainActivity.LikedSongList.size) { index -> 0 + index }
         var shuffedList = list.shuffled()
         var size:Int = if (MainActivity.LikedSongList.size <5){ MainActivity.LikedSongList.size} else{5}
