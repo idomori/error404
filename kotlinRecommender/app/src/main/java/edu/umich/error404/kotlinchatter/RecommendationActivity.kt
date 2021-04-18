@@ -289,7 +289,7 @@ class RecommendationActivity : AppCompatActivity() {
                                 seedRecWithStartingSongOrPlaylist()
                             }
                             else {
-                                //TODO: restart recommendation with 5 random songs
+                                //Done: restart recommendation with 5 random liked songs
                                 seedRecWithLikedSong()
                             }
 
@@ -330,7 +330,7 @@ class RecommendationActivity : AppCompatActivity() {
                                 finish()
                                 startActivity(intent)
                             } else {
-                                //TODO: restart recommendation with 5 random songs
+                                //Done: restart recommendation with 5 random liked songs
                                 seedRecWithLikedSong()
                             }
                         }
@@ -393,20 +393,12 @@ class RecommendationActivity : AppCompatActivity() {
 
     fun settingSwitchClick(v: View) {
         if (recViewById.settingSwitch.isChecked == false) {  //switch OFF
-            if (MainActivity.settingEnabled == true) {
-                MainActivity.songList.clear()
-            }
-            MainActivity.settingEnabled = false
             disableSettingBars()
             var d = getResources().getDrawable(R.drawable.roundcorner_disabled)
             recViewById.settingBtn.background = d
             recViewById.settingBtnLable.text = "Recommander \n Settings \n (Disabled)"
         }
         else { // switch ON
-            MainActivity.settingEnabled = true
-            if (MainActivity.settingEnabled == false) {
-                MainActivity.songList.clear()
-            }
             enableSettingBars()
             var d = getResources().getDrawable(R.drawable.roundcorner)
             recViewById.settingBtn.background = d
@@ -436,34 +428,44 @@ class RecommendationActivity : AppCompatActivity() {
 
 
     fun settingDoneBtnClick(v: View) {
+        // check if settingButton has been enabled/disabled and update songList
+        if (recViewById.settingSwitch.isChecked != MainActivity.settingEnabled) {
+            MainActivity.songList.clear()
+        }
+        MainActivity.settingEnabled = recViewById.settingSwitch.isChecked
+
+        // check if the audio range values have been changed
+        if (MainActivity.settingEnabled == true) {
+            if (recViewById.bpmRangeBar.selectedMinValue.toDouble() != MainActivity.minBpm) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.bpmRangeBar.selectedMaxValue.toDouble() != MainActivity.maxBpm) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.keysRangeBar.selectedMinValue.toInt() != MainActivity.minKey) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.danceabilityRangeBar.selectedMinValue.toDouble() != MainActivity.minDanceability) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.danceabilityRangeBar.selectedMaxValue.toDouble() != MainActivity.maxDanceability) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.valenceRangeBar.selectedMinValue.toDouble() != MainActivity.minValence) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.valenceRangeBar.selectedMaxValue.toDouble() != MainActivity.maxValence) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.energyRangeBar.selectedMinValue.toDouble() != MainActivity.minEnergy) {
+                MainActivity.songList.clear()
+            }
+            else if (recViewById.energyRangeBar.selectedMaxValue.toDouble() != MainActivity.maxEnergy) {
+                MainActivity.songList.clear()
+            }
+        }
+
         // update the audio range values
-        if (recViewById.bpmRangeBar.selectedMinValue.toDouble()!=MainActivity.minBpm) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.bpmRangeBar.selectedMaxValue.toDouble() != MainActivity.maxBpm) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.keysRangeBar.selectedMinValue.toInt() != MainActivity.minKey) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.danceabilityRangeBar.selectedMinValue.toDouble() != MainActivity.minDanceability) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.danceabilityRangeBar.selectedMaxValue.toDouble() != MainActivity.maxDanceability) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.valenceRangeBar.selectedMinValue.toDouble() != MainActivity.minValence) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.valenceRangeBar.selectedMaxValue.toDouble() != MainActivity.maxValence) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.energyRangeBar.selectedMinValue.toDouble() != MainActivity.minEnergy) {
-            MainActivity.songList.clear()
-        }
-        else if (recViewById.energyRangeBar.selectedMaxValue.toDouble() != MainActivity.maxEnergy) {
-            MainActivity.songList.clear()
-        }
         MainActivity.minBpm = recViewById.bpmRangeBar.selectedMinValue.toDouble()
         MainActivity.maxBpm = recViewById.bpmRangeBar.selectedMaxValue.toDouble()
         MainActivity.minKey = recViewById.keysRangeBar.selectedMinValue.toInt()
