@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivitySearchBinding
 import java.util.*
 
-class searchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
     // private lateinit var songs: SongListAdapter
     private lateinit var searchViewById: ActivitySearchBinding
 

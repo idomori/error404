@@ -51,7 +51,7 @@ class ImportActivity : AppCompatActivity() {
         val songName = importViewById.songName.text.toString()
 
         store.submitSongName(this, songName){
-            val intent = Intent(this, searchActivity::class.java)
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
 
@@ -63,7 +63,7 @@ class ImportActivity : AppCompatActivity() {
         val playListName = importViewById.playListName.text.toString()
 
         store.submitPlaylistName(this, playListName){
-            val intent = Intent(this, searchActivity::class.java)
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
 
