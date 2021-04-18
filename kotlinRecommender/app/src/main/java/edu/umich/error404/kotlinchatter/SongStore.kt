@@ -63,9 +63,158 @@ class SongStore{
                 println(error.message)
             }
         )
-
         queue.add(getRequest)
     }
+
+    fun updateRec(context: Context, sampledTrackIds: MutableList<String>, completion: () -> Unit) {
+        val queue = newRequestQueue(context)
+
+        var url:String = serverUrl + "update_rec/?track_id_0=" + sampledTrackIds[0]
+        for(i in 1 until sampledTrackIds.size){
+            url += "&track_id_"
+            url += i.toString()
+            url += "="
+            url += sampledTrackIds[i]
+        }
+        val getRequest = JsonObjectRequest(url, null,
+                { response ->
+                    val songsReceived = try {
+                        response.getJSONArray("result")
+                    } catch (e: JSONException) {
+                        JSONArray()
+                    }
+                    for (i in 0 until songsReceived.length()) {
+                        val songEntry = songsReceived[i] as JSONObject
+                        songFeature = songEntry
+                        getSongInfo(context) {}
+                    }
+                    completion();
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+        queue.add(getRequest)
+    }
+
+    fun updateRecWithAudioRange(context: Context, sampledTrackIds: MutableList<String>, completion: () -> Unit) {
+        val queue = newRequestQueue(context)
+
+        var url:String = serverUrl + "update_rec/?track_id_0=" + sampledTrackIds[0]
+        for(i in 1 until sampledTrackIds.size){
+            url += "&track_id_"
+            url += i.toString()
+            url += "="
+            url += sampledTrackIds[i]
+        }
+
+        url += "&min_tempo=" + MainActivity.minBpm
+        url += "&max_tempo=" + MainActivity.maxBpm
+        url += "&min_key=" + MainActivity.minKey
+        url += "&max_key=" + MainActivity.maxKey
+        url += "&min_danceability=" + MainActivity.minDanceability
+        url += "&max_danceability=" + MainActivity.maxDanceability
+        url += "&min_valence=" + MainActivity.minValence
+        url += "&max_valence=" + MainActivity.maxValence
+        url += "&min_energy=" + MainActivity.minEnergy
+        url += "&max_energy=" + MainActivity.maxEnergy
+
+        val getRequest = JsonObjectRequest(url, null,
+                { response ->
+                    val songsReceived = try {
+                        response.getJSONArray("result")
+                    } catch (e: JSONException) {
+                        JSONArray()
+                    }
+                    for (i in 0 until songsReceived.length()) {
+                        val songEntry = songsReceived[i] as JSONObject
+                        songFeature = songEntry
+                        getSongInfo(context) {}
+                    }
+                    completion();
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+        queue.add(getRequest)
+    }
+
+    fun readSongWithAudioRange(context: Context, trackUrl: String, completion: () -> Unit) {
+        val queue = newRequestQueue(context)
+        var url = serverUrl+"getsong/?track_id="+trackUrl
+        url += "&min_tempo=" + MainActivity.minBpm
+        url += "&max_tempo=" + MainActivity.maxBpm
+        url += "&min_key=" + MainActivity.minKey
+        url += "&max_key=" + MainActivity.maxKey
+        url += "&min_danceability=" + MainActivity.minDanceability
+        url += "&max_danceability=" + MainActivity.maxDanceability
+        url += "&min_valence=" + MainActivity.minValence
+        url += "&max_valence=" + MainActivity.maxValence
+        url += "&min_energy=" + MainActivity.minEnergy
+        url += "&max_energy=" + MainActivity.maxEnergy
+        val getRequest = JsonObjectRequest(url, null,
+                { response ->
+                    val songsReceived = try {
+                        response.getJSONArray("result")
+                    } catch (e: JSONException) {
+                        JSONArray()
+                    }
+                    for (i in 0 until songsReceived.length()) {
+                        val songEntry = songsReceived[i] as JSONObject
+                        songFeature = songEntry
+                        getSongInfo(context) {}
+                    }
+                    completion();
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+        queue.add(getRequest)
+    }
+
+    fun readPlayListWithAudioRange(context: Context, playListUrl: String, completion: () -> Unit) {
+        val queue = newRequestQueue(context)
+
+        var url = serverUrl+"read_playlist/?playlist_id="+playListUrl
+        url += "&min_tempo=" + MainActivity.minBpm
+        url += "&max_tempo=" + MainActivity.maxBpm
+        url += "&min_key=" + MainActivity.minKey
+        url += "&max_key=" + MainActivity.maxKey
+        url += "&min_danceability=" + MainActivity.minDanceability
+        url += "&max_danceability=" + MainActivity.maxDanceability
+        url += "&min_valence=" + MainActivity.minValence
+        url += "&max_valence=" + MainActivity.maxValence
+        url += "&min_energy=" + MainActivity.minEnergy
+        url += "&max_energy=" + MainActivity.maxEnergy
+
+        val getRequest = JsonObjectRequest(url, null,
+                { response ->
+                    val songsReceived = try {
+                        response.getJSONArray("result")
+                    } catch (e: JSONException) {
+                        JSONArray()
+                    }
+                    for (i in 0 until songsReceived.length()) {
+                        val songEntry = songsReceived[i] as JSONObject
+                        songFeature = songEntry
+                        getSongInfo(context) {}
+                    }
+                    completion();
+                },
+                { error ->
+                    // TODO: Handle error
+                    println(error.message)
+                }
+        )
+        queue.add(getRequest)
+    }
+
+
 
     fun submitSongName(context: Context, songName : String, completion: () -> Unit){
         val queue = newRequestQueue(context)
@@ -135,6 +284,10 @@ class SongStore{
 
         queue.add(getRequest)
     }
+
+
+
+
     // postsong function is deleted from backend
     fun postSong(context: Context, song: Song, completion: () -> Unit) {
         val queue = newRequestQueue(context)
@@ -142,7 +295,6 @@ class SongStore{
         val jsonObj = mapOf(
             "track_id" to song.songName
         )
-
         val postRequest = JsonObjectRequest(serverUrl + "postsong/", JSONObject(jsonObj),
 
             { response ->
@@ -169,7 +321,6 @@ class SongStore{
                 // TODO: Handle error
                 println(error.message)
             }
-
         )
 
         queue.add(postRequest)
@@ -195,3 +346,4 @@ class SongStore{
 
 
 }
+

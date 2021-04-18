@@ -79,14 +79,9 @@ class RecommendationActivity : AppCompatActivity() {
         image_url = song.image_url.toString()
         var artist_name = song.artistName
         var song_name = song.songName
-        bpmVal = song.bpm!!
-        keyVal = song.key!!
-        danceabilityVal = song.danceability!!
-        valenceVal = song.valence!!
-        energyVal = song.energy!!
         recViewById.songTitle.text = song_name
         recViewById.artistName.text = artist_name
-        //use sample urls for now
+        initAudioFeature()
 
         if (preview_url == "null") {
             val toast = Toast.makeText(
@@ -159,6 +154,14 @@ class RecommendationActivity : AppCompatActivity() {
 
     }
 
+    fun initAudioFeature() {
+        bpmVal = song.bpm!!
+        keyVal = song.key!!
+        danceabilityVal = song.danceability!!
+        valenceVal = song.valence!!
+        energyVal = song.energy!!
+    }
+
     fun initSettingBtn() {
         if (MainActivity.settingEnabled == false) {
             disableSettingBars()
@@ -193,6 +196,72 @@ class RecommendationActivity : AppCompatActivity() {
         recViewById.energyRangeBar.setSelectedMaxValue(MainActivity.maxEnergy)
     }
 
+    fun seedRecWithStartingSongOrPlaylist() {
+        val store = SongStore()
+        if (MainActivity.seedingUrl.contains("playlist", ignoreCase = true)) {
+            if (MainActivity.settingEnabled) {
+                store.readPlayListWithAudioRange(this, MainActivity.seedingUrl){
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
+                }
+            }
+            else {
+                store.readPlaylist(this, MainActivity.seedingUrl) {
+                    // refresh current activity
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
+                }
+            }
+
+        }
+        else {
+            if (MainActivity.settingEnabled) {
+                store.readSongWithAudioRange(this, MainActivity.seedingUrl){
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
+                }
+            }
+            else {
+                store.readSong(this, MainActivity.seedingUrl) {
+                    // refresh current activity
+                    val intent = intent
+                    finish()
+                    startActivity(intent)
+                }
+            }
+
+        }
+    }
+
+    fun seedRecWithLikedSong() {
+        var sampledIdx:MutableList<Int> = sampleLikedSong()
+        var sampledTrackIds : MutableList<String> = arrayListOf()
+        for (i in 0 until sampledIdx.size) {
+            MainActivity.LikedSongList[i].songId?.let { sampledTrackIds.add(it) }
+        }
+        val store = SongStore()
+        //TODO: restart recommendation with 5 random songs
+        if (MainActivity.settingEnabled == true) {
+            store.updateRecWithAudioRange(this@RecommendationActivity, sampledTrackIds) {
+                // refresh current activity
+                val intent = intent
+                finish()
+                startActivity(intent)
+            }
+        }
+        else {
+            store.updateRec(this@RecommendationActivity, sampledTrackIds) {
+                // refresh current activity
+                val intent = intent
+                finish()
+                startActivity(intent)
+            }
+        }
+
+    }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         super.dispatchTouchEvent(event)
@@ -214,19 +283,15 @@ class RecommendationActivity : AppCompatActivity() {
                             recViewById.rootLayout.setBackgroundColor(Color.WHITE)
                             // remove all songs from the songList, and
                             MainActivity.songList.clear()
-                            // restart recommendation with 5 random songs from liked song list
-                            var sampleIndex:MutableList<Int> = sampleLikedSong()
-
-                            val store = SongStore()  // TODO: restart recommendation with 5 random songs
-                            song.songId?.let {
-                                store.readSong(this@RecommendationActivity, it) {
-                                    // refresh current activity
-                                    val intent = intent
-                                    finish()
-                                    startActivity(intent)
-                                }
+                            // if LikedSongList is empty, we restart recommendation with the seeding url
+                            // else, we restart recommendation with 5 random songs from LikedSongList
+                            if (MainActivity.LikedSongList.isEmpty()) {
+                                seedRecWithStartingSongOrPlaylist()
                             }
-
+                            else {
+                                //TODO: restart recommendation with 5 random songs
+                                seedRecWithLikedSong()
+                            }
 
                         }
                     }
@@ -260,19 +325,13 @@ class RecommendationActivity : AppCompatActivity() {
                             mp.pause()
                             recViewById.rootLayout.setBackgroundColor(Color.WHITE)
                             // refresh current activity
-                            if (!MainActivity.songList.isEmpty()) {
+                            if (MainActivity.songList.isEmpty() == false) {
                                 val intent = intent
                                 finish()
                                 startActivity(intent)
                             } else {
-                                val store = SongStore()
-                                song.songId?.let {
-                                    store.readSong(this@RecommendationActivity, it) {
-                                        val intent = intent
-                                        finish()
-                                        startActivity(intent)
-                                    }
-                                }
+                                //TODO: restart recommendation with 5 random songs
+                                seedRecWithLikedSong()
                             }
                         }
                     }
@@ -334,6 +393,9 @@ class RecommendationActivity : AppCompatActivity() {
 
     fun settingSwitchClick(v: View) {
         if (recViewById.settingSwitch.isChecked == false) {  //switch OFF
+            if (MainActivity.settingEnabled == true) {
+                MainActivity.songList.clear()
+            }
             MainActivity.settingEnabled = false
             disableSettingBars()
             var d = getResources().getDrawable(R.drawable.roundcorner_disabled)
@@ -342,6 +404,9 @@ class RecommendationActivity : AppCompatActivity() {
         }
         else { // switch ON
             MainActivity.settingEnabled = true
+            if (MainActivity.settingEnabled == false) {
+                MainActivity.songList.clear()
+            }
             enableSettingBars()
             var d = getResources().getDrawable(R.drawable.roundcorner)
             recViewById.settingBtn.background = d
@@ -372,6 +437,33 @@ class RecommendationActivity : AppCompatActivity() {
 
     fun settingDoneBtnClick(v: View) {
         // update the audio range values
+        if (recViewById.bpmRangeBar.selectedMinValue.toDouble()!=MainActivity.minBpm) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.bpmRangeBar.selectedMaxValue.toDouble() != MainActivity.maxBpm) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.keysRangeBar.selectedMinValue.toInt() != MainActivity.minKey) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.danceabilityRangeBar.selectedMinValue.toDouble() != MainActivity.minDanceability) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.danceabilityRangeBar.selectedMaxValue.toDouble() != MainActivity.maxDanceability) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.valenceRangeBar.selectedMinValue.toDouble() != MainActivity.minValence) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.valenceRangeBar.selectedMaxValue.toDouble() != MainActivity.maxValence) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.energyRangeBar.selectedMinValue.toDouble() != MainActivity.minEnergy) {
+            MainActivity.songList.clear()
+        }
+        else if (recViewById.energyRangeBar.selectedMaxValue.toDouble() != MainActivity.maxEnergy) {
+            MainActivity.songList.clear()
+        }
         MainActivity.minBpm = recViewById.bpmRangeBar.selectedMinValue.toDouble()
         MainActivity.maxBpm = recViewById.bpmRangeBar.selectedMaxValue.toDouble()
         MainActivity.minKey = recViewById.keysRangeBar.selectedMinValue.toInt()
@@ -427,12 +519,11 @@ class RecommendationActivity : AppCompatActivity() {
     }
 
     fun sampleLikedSong(): MutableList<Int> {
-
         var list = MutableList(MainActivity.LikedSongList.size) { index -> 0 + index }
         var shuffedList = list.shuffled()
         var size:Int = if (MainActivity.LikedSongList.size <5){ MainActivity.LikedSongList.size} else{5}
-        var sampleIndex = shuffedList.subList(0,size).toMutableList()
-        return sampleIndex
+        var sampledIdx = shuffedList.subList(0,size).toMutableList()
+        return sampledIdx
     }
 
 

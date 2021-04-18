@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
         // information about the seeding song/playlist
         var seedingUrl:String = ""
-        var seedingType:String = ""
 
         // song storage
         var songList: Queue<Song> = LinkedList<Song>()

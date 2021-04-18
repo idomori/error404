@@ -2,7 +2,9 @@ package edu.umich.error404.kotlinchatter
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivityImportBinding
 
@@ -18,22 +20,41 @@ class ImportActivity : AppCompatActivity() {
     }
 
     fun submitSong(view: View?) {
-
         val enteredUrl = importViewById.songLink.text.toString()
         MainActivity.seedingUrl = enteredUrl
         val store = SongStore()
         if (enteredUrl.contains("playlist", ignoreCase = true)) {
-            MainActivity.seedingType = "playlist"
             store.readPlaylist(this, enteredUrl) {
                 val intent = Intent(this, RecommendationActivity::class.java)
-                startActivity(intent)
+                if(MainActivity.songList.isEmpty()) {
+                    val toast = Toast.makeText(
+                            applicationContext,
+                            "Sorry. We can not find any related song. Please enter a new url",
+                            Toast.LENGTH_SHORT
+                    )
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
+                }
+                else {
+                    startActivity(intent)
+                }
             }
         }
         else {
-            MainActivity.seedingType = "song"
             store.readSong(this, enteredUrl) {
                 val intent = Intent(this, RecommendationActivity::class.java)
-                startActivity(intent)
+                if(MainActivity.songList.isEmpty()) {
+                    val toast = Toast.makeText(
+                            applicationContext,
+                            "Sorry. We can not find any related song. Please enter a new url",
+                            Toast.LENGTH_SHORT
+                    )
+                    toast.setGravity(Gravity.CENTER, 0, 0)
+                    toast.show()
+                }
+                else {
+                    startActivity(intent)
+                }
             }
         }
         // populateSongList()
