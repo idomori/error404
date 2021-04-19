@@ -160,7 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:text="Recommendation \n Settings \n (Disabled)"
+            android:text="Recommender \n Settings \n (Disabled)"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settingBtn" />
 
