@@ -32,6 +32,6 @@
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/check" />
+        app:srcCompat="@drawable/yellow" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
