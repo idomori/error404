@@ -14,15 +14,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import edu.umich.error404.kotlinchatter.databinding.ActivityRecommendationBinding
-import org.florescu.android.rangeseekbar.RangeSeekBar
 import kotlin.math.abs
-import kotlin.random.Random
-
 
 class RecommendationActivity : AppCompatActivity() {
     private lateinit var recViewById: ActivityRecommendationBinding
@@ -152,7 +150,18 @@ class RecommendationActivity : AppCompatActivity() {
         initSettingBtn()
         initSettingRangeBars()
 
+        // Pause the player on back press
+        onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                mp.pause()
+                MainActivity.songList.clear()
+            }
+        })
+
     }
+
+
 
     fun initAudioFeature() {
         bpmVal = song.bpm!!
