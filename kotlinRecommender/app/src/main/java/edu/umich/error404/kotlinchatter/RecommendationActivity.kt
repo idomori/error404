@@ -156,6 +156,7 @@ class RecommendationActivity : AppCompatActivity() {
                 finish()
                 mp.pause()
                 MainActivity.songList.clear()
+                MainActivity.LikedSongList.clear()
             }
         })
 
