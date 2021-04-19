@@ -96,7 +96,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:lineSpacingExtra="1dp"
-        android:text="Swipe Left to Discard the Song \n Swipe Right to Keep the Song \n Or control the recommadation in Settings"
+        android:text="Swipe Left to Discard the Song \n Swipe Right to Keep the Song \n Or control the recommendation in Settings"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -160,7 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            android:text="Recommander \n Settings \n (Disabled)"
+            android:text="Recommendation \n Settings \n (Disabled)"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/settingBtn" />
 
@@ -180,7 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:gravity="center"
-            android:text="Finish \n Section"
+            android:text="Finish \n Session"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/endBtn" />
 

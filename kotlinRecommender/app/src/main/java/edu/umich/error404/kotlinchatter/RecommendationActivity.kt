@@ -178,14 +178,14 @@ class RecommendationActivity : AppCompatActivity() {
             recViewById.settingSwitch.isChecked = false
             var d = getResources().getDrawable(R.drawable.roundcorner_disabled)
             recViewById.settingBtn.background = d
-            recViewById.settingBtnLable.text = "Recommander \n Settings \n (Disabled)"
+            recViewById.settingBtnLable.text = "Recommender \n Settings \n (Disabled)"
         }
         else {
             enableSettingBars()
             recViewById.settingSwitch.isChecked = true
             var d = getResources().getDrawable(R.drawable.roundcorner)
             recViewById.settingBtn.background = d
-            recViewById.settingBtnLable.text = "Recommander \n Settings \n (Enabled)"
+            recViewById.settingBtnLable.text = "Recommender \n Settings \n (Enabled)"
         }
     }
 
