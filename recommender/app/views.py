@@ -58,9 +58,9 @@ def update_rec(request):
     min_tempo = request.GET.get("min_tempo")
     max_tempo = request.GET.get("max_tempo")
 
-    print("TEMPO")
-    print(max_tempo)
-    print(min_tempo)
+    #print("TEMPO")
+    #print(max_tempo)
+    #print(min_tempo)
 
     auth_manager = SpotifyClientCredentials()
     sp = spotipy.Spotify(auth_manager=auth_manager)
@@ -99,7 +99,6 @@ def update_rec(request):
 def update_rec_helper(list, min_key, max_key, min_danceability, max_danceability, min_energy, max_energy, min_valence, max_valence, min_tempo, max_tempo):
     auth_manager = SpotifyClientCredentials()
     sp = spotipy.Spotify(auth_manager=auth_manager)
-    #seed_list = '6Uoy0crNjS4HHThiwX5pGQ'
 
     playlist_items = ["track_name","artists","track_id", "artist_id", "preview_url", "image_url", "key","tempo","danceability", "energy", "valence"]
 
@@ -198,16 +197,10 @@ def nearest_neighbors(initial_seed, initial_recs):
 	cosine_list.sort(reverse=True, key = lambda x: x[11])
 	# above is cosine similarty
 	new_list = []
-	print("Variable N: ")
-	print(N)
+	#print("Variable N: ")
+	#print(N)
 	for j in range(0, int(N / 2)):
-		# temp_list = []
 		temp_dict = {}
-		# print(cosine_list[j][0])
-		#temp_list.append(cosine_list[j][0])
-		#temp_list.append(cosine_list[j][1])
-		#temp_list.append(cosine_list[j][2])
-		#temp_list.append(cosine_list[j][3])
 		temp_dict["track_name"] = cosine_list[j][0]
 		temp_dict["artist"] = cosine_list[j][1]
 		temp_dict["track_id"] = cosine_list[j][2]
@@ -220,7 +213,6 @@ def nearest_neighbors(initial_seed, initial_recs):
 		temp_dict["danceability"] = cosine_list[j][9]
 		temp_dict["valence"] = cosine_list[j][10]
 		new_list.append(temp_dict)
-	#return list
 	return new_list
 	# if paramater is turned off, need to just put the wanted ones in for the spotify vector temp
 
@@ -228,7 +220,6 @@ def nearest_neighbors(initial_seed, initial_recs):
 def playlist_rec_helper(seed_list, min_key, max_key, min_danceability, max_danceability, min_energy, max_energy, min_valence, max_valence, min_tempo, max_tempo):
     auth_manager = SpotifyClientCredentials()
     sp = spotipy.Spotify(auth_manager=auth_manager)
-    #seed_list = '6Uoy0crNjS4HHThiwX5pGQ'
 
     playlist_items = ["track_name","artists","track_id", "artist_id", "preview_url", "image_url", "key","tempo","danceability", "energy", "valence"]
 
@@ -243,7 +234,7 @@ def playlist_rec_helper(seed_list, min_key, max_key, min_danceability, max_dance
     all_recs["recommendation"] = []
     rec_track_id_list = []
     num_samples = random.sample(range(0, len(tracks)), 5)
-    print(num_samples)
+    #print(num_samples)
     sample_tracks = []
     for i in num_samples:
         sample_tracks.append(tracks[i])
@@ -276,51 +267,19 @@ def playlist_rec_helper(seed_list, min_key, max_key, min_danceability, max_dance
             track[feature] = track_af[feature]
 
 
-
-    # for i in range(5,len(playlist)+1,5):
-    
-    #recommend["track_name"] = rec["tracks"]["track"]
-    #for j in range(0,len(rec["tracks"])):
-
-    #rec_info["track_name"] = rec["tracks"][0]["name"]
-    #rec_info["artist"] = rec["tracks"][0]["album"]["artists"][0]["name"]
-    #rec_info["track_id"] = rec["tracks"][0]["id"]
-    #rec_info["artist_id"] = rec["tracks"][0]["album"]["artists"][0]["id"]
-    #rec_info["preview_url"] = rec["tracks"][0]["preview_url"]#null?
-    #if rec["tracks"][0]["album"]["images"][0]["url"] is not None:
-    #    rec_info["image_url"] = rec["tracks"][0]["album"]["images"][0]["url"]
-    #else:
-    #    rec_info["image_url"] = None
-    #rec_feat = sp.audio_features(rec_info["track_id"])[0]
-    #for feature in playlist_items[6:]:
-    #    rec_info[feature] = rec_feat[feature]
-    #all_recs["recommendation"].append(rec_info)
-
     return all_recs
 
 @csrf_exempt
 def track_rec_helper(seed_list, min_key, max_key, min_danceability, max_danceability, min_energy, max_energy, min_valence, max_valence, min_tempo, max_tempo):
     auth_manager = SpotifyClientCredentials()
     sp = spotipy.Spotify(auth_manager=auth_manager)
-    #seed_list = '6rqhFgbbKwnb9MLmUQDhG6'
 
     playlist_items = ["track_name","artists","track_id", "artist_id", "preview_url", "image_url", "key","tempo","danceability", "energy", "valence"]
     seed = [seed_list]
     rec_info = {}
-    # track = sp.track(seed_list)
     rec = sp.recommendations(seed_tracks = seed, limit = 5, min_key = min_key, max_key = max_key, min_danceability = min_danceability, 
                              max_danceability = max_danceability, min_energy = min_energy, max_energy = max_energy, min_valence = min_valence , max_valence = max_valence, 
                              min_tempo = min_tempo, max_tempo = max_tempo)
-
-    #rec_info["track_name"] = rec["tracks"][0]["name"]
-    #rec_info["artist"] = rec["tracks"][0]["album"]["artists"][0]["name"]
-    #rec_info["track_id"] = rec["tracks"][0]["id"]
-    #rec_info["artist_id"] = rec["tracks"][0]["album"]["artists"][0]["id"]
-    #rec_info["preview_url"] = rec["tracks"][0]["preview_url"]#null?
-    #rec_info["image_url"] = rec["tracks"][0]["album"]["images"][0]["url"]
-    #rec_feat = sp.audio_features(rec_info["track_id"])[0]
-    #for feature in playlist_items[6:]:
-    #    rec_info[feature] = rec_feat[feature]
 
     all_recs = {}
     all_recs["recommendation"] = []
@@ -356,7 +315,6 @@ def getsongs(request):
     track_id = '6rqhFgbbKwnb9MLmUQDhG6'  # Dummy Track
     response = {}
     response['songs'] = sp.audio_features([track_id])
-    #  response['songs'] = ['Replace Me', 'DUMMY RESPONSE'] 
     return JsonResponse(response)
 
 
@@ -365,7 +323,7 @@ def postsong(request):
 
     if request.method != 'POST':
         return HttpResponse(status=404)
-    print(request)
+    #print(request)
     json_data = json.loads(request.body)
     track_id = json_data['track_id']
 
@@ -384,25 +342,20 @@ def postsong(request):
                               	headers={'Authorization': 'Bearer '	 + token})
     except requests.exceptions.RequestException as e:  # This is the correct syntax
     	print(e)
-   ##  print(response.json())
-
+	
     response = response.json()
     track_info['songs'][0]['artists'] = response['artists']
     track_info['songs'][0]['name'] = response['name']
     
-    ## track_id = '6rqhFgbbKwnb9MLmUQDhG6'  # Dummy Track
 
     return JsonResponse(track_info)
-    #return track_rec_helper(track_id)
 
 @csrf_exempt
 def getsong(request):
 
     if request.method != 'GET':
         return HttpResponse(status=404)
-    print(request)
-    # json_data = json.loads(request.body)
-    # track_id = json_data['track_id']
+    #print(request)
     track_id = request.GET.get("track_id")
     min_key = request.GET.get("min_key")
     max_key = request.GET.get("max_key")
@@ -419,13 +372,12 @@ def getsong(request):
     sp = spotipy.Spotify(auth_manager=auth_manager)
     token = auth_manager.get_access_token()
     
-    print("TEMPO")
-    print(min_tempo)
-    print(max_tempo)
+    #print("TEMPO")
+    #print(min_tempo)
+    #print(max_tempo)
 
     
     track_info = {}
-    # track_info['tracks'] = sp.audio_features([track_id])
     sp_response = sp.audio_features([track_id])
     track_info["tracks"] = []
     info = {}
@@ -455,43 +407,23 @@ def getsong(request):
     track_info['tracks'][0]['artist_id'] = response['artists'][0]['id']
     track_info['tracks'][0]['track_name'] = response['name']
 
-    # track_info['songs'][0]['artists'] = response['artists']
-    # track_info['songs'][0]['name'] = response['name']
-
-
-    
-    
-
-    #all_recs["recommendation"] = []
-    #gets one recommendation for each iteration of loop
-    #for i in range(0,5):
-    #	new_rec = track_rec_helper(track_id, min_key, max_key, min_danceability, max_danceability, min_energy, max_energy, min_valence, max_valence, min_tempo, max_tempo)
-    #	all_recs["recommendation"].append(new_rec)
-    
-    #track_list = {}
-    #track_list["tracks"] = []
-    #track_list["tracks"].append(track_info)
-
     all_recs = track_rec_helper(track_id, min_key, max_key, min_danceability, max_danceability, min_energy, max_energy, min_valence, max_valence, min_tempo, max_tempo)
 
     response = {}
     response["result"] = nearest_neighbors(track_info, all_recs)
-    print(response)
+    #print(response)
     return JsonResponse(response)
 
 
 
-#Take two at making read playlist function
 
 @csrf_exempt
 def read_playlist(request):
     
     if request.method != 'GET':
         return HttpResponse(status=404)
-    # json_data = json.loads(request.body)
-    # pid = json_data['playlist_id']
 
-    print("READ_PLAYLIST IS BEING CALLED")
+    #print("READ_PLAYLIST IS BEING CALLED")
     pid = request.GET.get("playlist_id")
     min_key = request.GET.get("min_key")
     max_key = request.GET.get("max_key")
@@ -503,9 +435,9 @@ def read_playlist(request):
     max_valence = request.GET.get("max_valence")
     min_tempo = request.GET.get("min_tempo")
     max_tempo = request.GET.get("max_tempo")
-    print("TEMPO")
-    print(min_tempo)
-    print(max_tempo)
+    #print("TEMPO")
+    #print(min_tempo)
+    #print(max_tempo)
 
 
     auth_manager = SpotifyClientCredentials()
@@ -515,7 +447,6 @@ def read_playlist(request):
 
     playlist_items = ["track_name","artists","track_id", "artist_id", "preview_url", "image_url", "key","tempo","danceability", "energy", "valence"]
 
-    #pid = '6Uoy0crNjS4HHThiwX5pGQ'
     playlist_info = {}
     playlist_info["tracks"] = []
     playlist = sp.playlist_tracks(pid)
@@ -546,22 +477,10 @@ def read_playlist(request):
         for feature in playlist_items[6:]:
             track[feature] = track_af[feature]
 
-
-
-    #rec_info = reco_helper(pid)
     all_recs = playlist_rec_helper(pid, min_key, max_key, min_danceability, max_danceability, min_energy, max_energy, min_valence, max_valence, min_tempo, max_tempo)
 
-
-    #all_recs["recommendation"] = []
-
-
-    #gets one recommendation for each iteration of loop
-    #for i in range(0,5):
-    #	new_rec = playlist_rec_helper(pid)
-    #	all_recs["recommendation"].append(new_rec)
     response = {}
     response["result"] = nearest_neighbors(playlist_info, all_recs)
-
 
     return JsonResponse(response)
 
@@ -570,14 +489,11 @@ def read_playlist(request):
 def make_rec(json_input):
     if json_input.method != 'GET':
         return HttpResponse(status=404)
-    #seed_list = json_input.GET.get("playlist_id")
     json_data = json.loads(json_input.body)
     seed_list = json_data['playlist_id']
     auth_manager = SpotifyClientCredentials()
     sp = spotipy.Spotify(auth_manager=auth_manager)
    
-   #seed_list = '6Uoy0crNjS4HHThiwX5pGQ'
-
     playlist_items = ["track_name","artists","track_id", "artist_id", "preview_url", "image_url", "key","tempo","danceability"]
 
     artists = []
@@ -592,7 +508,6 @@ def make_rec(json_input):
 
     for i in range(5,len(playlist)+1,5):
         rec = sp.recommendations(seed_tracks = tracks[i-5:i], limit=25)
-        #recommend["track_name"] = rec["tracks"]["track"]
         rec_info["track_name"] = rec["tracks"][0]["name"]
         rec_info["artist"] = rec["tracks"][0]["album"]["artists"][0]["name"]
         rec_info["track_id"] = rec["tracks"][0]["id"]
@@ -643,41 +558,3 @@ def search_playlist(request):
 
 
     return JsonResponse(return_dict)
-#@csrf_exempt
-#def create_recommendations(api_results):
-#
-#    if api_results.method != 'POST':
-#        return HttpResponse(status=404)
-#    json_data = json.loads(api_results.body)
-#
-#    track_info = json_data['track_info']
-#
-#    auth_manager = SpotifyClientCredentials()
-#    sp = spotipy.Spotify(auth_manager=auth_manager)
-#    token = auth_manager.get_access_token()
-#
-#    
-#
-#    track_name = []
-#    track_id = []
-#    artist = []
-#    album = []
-#    duration = []
-#    popularity = []
-#    for items in api_results['tracks']:
-#        try:
-#            track_name.append(items['name'])
-#            track_id.append(items['id'])
-#            artist.append(items["artists"][0]["name"])
-#            duration.append(items["duration_ms"])
-#            album.append(items["album"]["name"])
-#            popularity.append(items["popularity"])
-#        except TypeError:
-#            pass
-#         df = pd.DataFrame({ "track_name": track_name, 
-#                             "album": album, 
-#                             "track_id": track_id,
-#                             "artist": artist, 
-#                             "duration": duration, 
-#                             "popularity": popularity})
-#    return df
