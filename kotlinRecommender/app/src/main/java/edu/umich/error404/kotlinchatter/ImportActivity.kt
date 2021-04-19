@@ -1,12 +1,16 @@
 package edu.umich.error404.kotlinchatter
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivityImportBinding
+
 
 class ImportActivity : AppCompatActivity() {
     private val serverUrl = "https://159.65.222.2/"
@@ -17,6 +21,22 @@ class ImportActivity : AppCompatActivity() {
 
         importViewById = ActivityImportBinding.inflate(layoutInflater)
         setContentView(importViewById.root)
+
+        importViewById.songLink.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+            }
+        })
+        importViewById.songName.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+            }
+        })
+        importViewById.playListName.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                hideKeyboard(v)
+            }
+        })
     }
 
     fun submitSong(view: View?) {
@@ -64,6 +84,11 @@ class ImportActivity : AppCompatActivity() {
     fun goBack(view: View?) {
         val intent = Intent(this, StartingActivity::class.java)
         startActivity(intent)
+    }
+
+    fun hideKeyboard(view: View?) {
+        val inputMethodManager: InputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     fun submitSongName(view: View?){

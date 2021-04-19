@@ -230,15 +230,16 @@ class SongStore{
                         JSONArray()
                     }
                     for (i in 0 until songsReceived.length()) {
-                        val songEntry = songsReceived[i] as List<String>
+                        val songEntry = songsReceived[i] as JSONArray
 
-                        SearchActivity.songNameList[i] = (
+                        SearchActivity.songNameList.add(
                                 SongPlaylistSearch(
-                                        image = songEntry[0],
-                                        name = songEntry[1],
-                                        url = songEntry[2]
+                                        image = songEntry.get(0).toString(),
+                                        name = songEntry.get(1).toString(),
+                                        url = songEntry.get(2).toString()
                                 )
                         )
+
                     }
                     completion();
                 },
@@ -264,13 +265,13 @@ class SongStore{
                         JSONArray()
                     }
                     for (i in 0 until songsReceived.length()) {
-                        val songEntry = songsReceived[i] as List<String>
+                        val songEntry = songsReceived[i] as JSONArray
 
                         SearchActivity.songNameList.add(
                                 SongPlaylistSearch(
-                                        image = songEntry[0],
-                                        name = songEntry[1],
-                                        url = songEntry[2]
+                                        image = songEntry.get(0).toString(),
+                                        name = songEntry.get(1).toString(),
+                                        url = songEntry.get(2).toString()
                                 )
                         )
                     }

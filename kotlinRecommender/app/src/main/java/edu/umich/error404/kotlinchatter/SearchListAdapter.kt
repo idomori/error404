@@ -1,6 +1,8 @@
 package edu.umich.error404.kotlinchatter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +29,26 @@ class SearchListAdapter(context: Context, users: ArrayList<SongPlaylistSearch?>)
                 listItemViewById.nameTextView.text = name
                 listItemViewById.urlTextView.text = url
                 Picasso.get().load(image).into(listItemViewById.songImage)
+
+                listItemViewById.root.setOnClickListener {
+                    val store = SongStore()
+                    url?.let{
+                        if (it.contains("playlist", ignoreCase = true)) {
+                            store.readPlaylist(context,it) {
+                                val intent = Intent(context, RecommendationActivity::class.java)
+                                context.startActivity(intent)
+                            }
+                        } else {
+                            store.readSong(context, it) {
+                                val intent = Intent(context, RecommendationActivity::class.java)
+                                context.startActivity(intent)
+                            }
+
+                        }
+
+                    }
+                }
+
 
 
             }

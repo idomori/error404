@@ -3,6 +3,7 @@ package edu.umich.error404.kotlinchatter
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivityMainBinding
 import java.util.*
@@ -50,7 +51,14 @@ class MainActivity : AppCompatActivity() {
         mainViewById.refreshContainer.setOnRefreshListener {
 //            //refreshTimeline()
             mainViewById.refreshContainer.isRefreshing = false
-       }
+        }
+
+        onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                LikedSongList.clear()
+            }
+        })
 //        refreshTimeline()
 
     }

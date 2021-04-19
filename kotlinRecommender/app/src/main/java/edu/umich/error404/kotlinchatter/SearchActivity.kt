@@ -1,6 +1,9 @@
 package edu.umich.error404.kotlinchatter
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import edu.umich.error404.kotlinchatter.databinding.ActivitySearchBinding
 
@@ -26,7 +29,18 @@ class SearchActivity : AppCompatActivity() {
         for (i in 0 until songNameList.size) {
             songs.add(songNameList[i])
         }
+
+        onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                songNameList.clear()
+            }
+        })
+
     }
+
+
+
 
 
 }
