@@ -231,8 +231,20 @@ class RecommendationActivity : AppCompatActivity() {
                 store.readPlaylist(this, MainActivity.seedingUrl) {
                     // refresh current activity
                     val intent = intent
-                    finish()
-                    startActivity(intent)
+                    if(MainActivity.songList.isEmpty()) {
+                        val toast = Toast.makeText(
+                                applicationContext,
+                                "Sorry. We can not find any recommendations within this range. Please reconfigure.",
+                                Toast.LENGTH_SHORT
+                        )
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                        MainActivity.LikedSongList.remove(song)
+                    }
+                    else {
+                        finish()
+                        startActivity(intent)
+                    }
                 }
             }
 
@@ -261,8 +273,20 @@ class RecommendationActivity : AppCompatActivity() {
                 store.readSong(this, MainActivity.seedingUrl) {
                     // refresh current activity
                     val intent = intent
-                    finish()
-                    startActivity(intent)
+                    if(MainActivity.songList.isEmpty()) {
+                        val toast = Toast.makeText(
+                                applicationContext,
+                                "Sorry. We can not find any recommendations within this range. Please reconfigure.",
+                                Toast.LENGTH_SHORT
+                        )
+                        toast.setGravity(Gravity.CENTER, 0, 0)
+                        toast.show()
+                        MainActivity.LikedSongList.remove(song)
+                    }
+                    else {
+                        finish()
+                        startActivity(intent)
+                    }
                 }
             }
 

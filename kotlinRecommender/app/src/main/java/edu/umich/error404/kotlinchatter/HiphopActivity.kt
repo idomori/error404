@@ -43,7 +43,7 @@ class HiphopActivity : AppCompatActivity() {
         val store = SongStore()
 
         val playlistName = intent.getStringExtra("playlist")
-
+        MainActivity.seedingUrl = playlistName
         store.readPlaylist(this, playlistName){
             val intent = Intent(this, RecommendationActivity::class.java)
             startActivity(intent)
