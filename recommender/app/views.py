@@ -79,7 +79,15 @@ def update_rec(request):
         list_info["tracks"].append(track_info)
     
        
+    #These print statements show the songs seeding the recommender when it becomes time to update the weights
+    #The old seeding is ignored and these new songs are used to seed the recommender. Their weights are used to find similar songs
     
+    print("New seeding tracks:")
+    print("#1 ", list_info["tracks"][0]["track_id"])
+    print("#2 ", list_info["tracks"][1]["track_id"])
+    print("#3 ", list_info["tracks"][2]["track_id"])
+    print("#4 ", list_info["tracks"][3]["track_id"])
+    print("#5 ", list_info["tracks"][4]["track_id"])
 
     list_af = sp.audio_features(track_id_list)
 
@@ -388,6 +396,12 @@ def getsong(request):
     info["energy"] = sp_response[0]["energy"]
     info["track_id"] = sp_response[0]["id"]
 
+	  
+    print("Features of Song Submitted by User")
+    print("key: ", info["key"])
+    print("bpm: ", info["tempo"])
+    print("energy: ", info["energy"])
+    print("danceability: ", info["danceability"])
 
     track_info["tracks"].append(info)
 
@@ -412,6 +426,26 @@ def getsong(request):
     response = {}
     response["result"] = nearest_neighbors(track_info, all_recs)
     #print(response)
+	  
+    #This is commented out because printing gunicorn status has a limited number of lines
+    #These print statements are where we showed the recommended song has similar key, bpm, energy, and danceability to the seeded song 
+    print("Recommended song")
+    print("key: ", response["result"][0]["key"])
+    print("bpm: ", response["result"][0]["tempo"])
+    print("energy: ", resposne["result"][0]["energy"])
+    print("danceability: ", response["result"][0]["danceability"])
+	  
+    #These print statements are where we printed the track id for the seeded song (the song the user inputs)
+    #and also show the track ids for five recommended songs. These five ids are later seen from another print
+    #statement as input to the recommender. We use features from the songs seeding the recommender as the weights (key, bpm, etc)
+    print("Track id of song seeding recommender: ", info["track_id"])
+    print("Track id of recommended song: ")
+    print("#0 ", response["result"][0]["track_id"])
+    print("#1 ", response["result"][1]["track_id"])
+    print("#2 ", response["result"][2]["track_id"])
+    print("#3 ", response["result"][3]["track_id"])
+    print("#4 ", response["result"][4]["track_id"])
+    
     return JsonResponse(response)
 
 
