@@ -429,11 +429,11 @@ def getsong(request):
 	  
     #This is commented out because printing gunicorn status has a limited number of lines
     #These print statements are where we showed the recommended song has similar key, bpm, energy, and danceability to the seeded song 
-    print("Recommended song")
-    print("key: ", response["result"][0]["key"])
-    print("bpm: ", response["result"][0]["tempo"])
-    print("energy: ", resposne["result"][0]["energy"])
-    print("danceability: ", response["result"][0]["danceability"])
+    #print("Recommended song")
+    #print("key: ", response["result"][0]["key"])
+    #print("bpm: ", response["result"][0]["tempo"])
+    #print("energy: ", resposne["result"][0]["energy"])
+    #print("danceability: ", response["result"][0]["danceability"])
 	  
     #These print statements are where we printed the track id for the seeded song (the song the user inputs)
     #and also show the track ids for five recommended songs. These five ids are later seen from another print
